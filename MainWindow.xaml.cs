@@ -1266,7 +1266,7 @@ namespace Skydl
                 proc.StandardInput.WriteLine(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatprereq + playlistprereq + downloadloc + link.Text);
                 output.ScrollToEnd();
 
-                link.Text = "";
+                
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
@@ -1311,36 +1311,46 @@ namespace Skydl
 
                     });
 
-                if (err == "")
+                if (err != null)
                 {
+                    if (err == "")
+                    {
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                    }
+                    else
+                    {
+                        if (err.Contains("is not recognized") is true)
+                        {
+                            this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                            MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            output.AppendText(err);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+
+                        }
+                    }
+                }
+                else
+                {
+
                     output.ScrollToEnd();
                     Queue = 0;
                     processingpopup.Visibility = Visibility.Hidden;
                     abortbutton.Visibility = Visibility.Hidden;
-
-                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
-                }
-                else
-                {
-                    if (err.Contains("is not recognized") is true)
-                    {
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
-                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        output.AppendText(err);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-
-
-                    }
                 }
 
 
@@ -1416,46 +1426,56 @@ namespace Skydl
 
                 });
 
-
-                if (err == "")
+                if (err != null)
                 {
-
-                    if (fetchedurl == "")
+                    if (err == "")
                     {
-                        
-                        MessageBox.Show("A url for media extraction from a direct link was unable to be fetched, please try a different link", "Could Not Extract Link", MessageBoxButton.OK, MessageBoxImage.Information);
-                        output.ScrollToEnd();
-                    } 
-                    
+
+                        if (fetchedurl == "")
+                        {
+
+                            MessageBox.Show("A url for media extraction from a direct link was unable to be fetched, please try a different link", "Could Not Extract Link", MessageBoxButton.OK, MessageBoxImage.Information);
+                            output.ScrollToEnd();
+                        }
+
+                        else
+                        {
+                            output.ScrollToEnd();
+                            await ffmpegportioncontinued();
+                        }
+
+                    }
                     else
                     {
-                        output.ScrollToEnd();
-                        await ffmpegportioncontinued();
+                        if (err.Contains("is not recognized") is true)
+                        {
+                            this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                            MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            output.AppendText(err);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+
+
+                        }
                     }
-                    
                 }
                 else
                 {
-                    if (err.Contains("is not recognized") is true)
-                    {
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
-                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        output.AppendText(err);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-
-
-                    }
+                    output.ScrollToEnd();
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
                 }
+                
 
                 
 
@@ -2200,37 +2220,48 @@ namespace Skydl
 
                 });
 
-                if (err == "")
+                if (err != null)
                 {
+                    if (err == "")
+                    {
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                    }
+                    else
+                    {
+                        if (err.Contains("is not recognized") is true)
+                        {
+                            this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                            MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            output.AppendText(err);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+
+                        }
+                    }
+                } else
+                {
+                    
                     output.ScrollToEnd();
                     Queue = 0;
                     processingpopup.Visibility = Visibility.Hidden;
                     abortbutton.Visibility = Visibility.Hidden;
-
-                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
                 }
-                else
-                {
-                    if (err.Contains("is not recognized") is true)
-                    {
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
-                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        output.AppendText(err);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
 
-
-                    }
-                }
+                
 
 
             }
@@ -2351,37 +2382,49 @@ namespace Skydl
 
                 });
 
-                if (err == "")
+                if (err != null)
                 {
+                    if (err == "")
+                    {
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                    }
+                    else
+                    {
+                        if (err.Contains("is not recognized") is true)
+                        {
+                            this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                            MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            output.AppendText(err);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+
+                        }
+                    }
+                }
+                else
+                {
+
                     output.ScrollToEnd();
                     Queue = 0;
                     processingpopup.Visibility = Visibility.Hidden;
                     abortbutton.Visibility = Visibility.Hidden;
-
-                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
-                } else
-                {
-                    if (err.Contains("is not recognized") is true)
-                    {
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
-                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to","System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-                    } else
-                    {
-                        output.AppendText(err);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-
-                       
-                    }
                 }
 
-                
+
             }
             else
             {
@@ -2463,7 +2506,7 @@ namespace Skydl
 
                 });
 
-                if (err == "")
+                if (err == null)
                 {
 
                     this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
@@ -2610,36 +2653,46 @@ namespace Skydl
 
                 });
 
-                if (err == "")
+                if (err != null)
                 {
+                    if (err == "")
+                    {
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                    }
+                    else
+                    {
+                        if (err.Contains("is not recognized") is true)
+                        {
+                            this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                            MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            output.AppendText(err);
+                            output.ScrollToEnd();
+                            Queue = 0;
+                            processingpopup.Visibility = Visibility.Hidden;
+                            abortbutton.Visibility = Visibility.Hidden;
+
+                        }
+                    }
+                }
+                else
+                {
+
                     output.ScrollToEnd();
                     Queue = 0;
                     processingpopup.Visibility = Visibility.Hidden;
                     abortbutton.Visibility = Visibility.Hidden;
-
-                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
-                }
-                else
-                {
-                    if (err.Contains("is not recognized") is true)
-                    {
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
-                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        output.AppendText(err);
-                        output.ScrollToEnd();
-                        Queue = 0;
-                        processingpopup.Visibility = Visibility.Hidden;
-                        abortbutton.Visibility = Visibility.Hidden;
-
-
-                    }
                 }
 
 
