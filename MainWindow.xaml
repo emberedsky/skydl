@@ -12,9 +12,12 @@
  
 
     <Border x:Name="entireborder" >
+        
         <StackPanel Margin="10 10 10 5" >
             <Border x:Name="borderforoutlinecolor" BorderBrush="Black" BorderThickness="1">
                 <Grid>
+
+                   
 
                     <Grid.RowDefinitions>
 
@@ -51,7 +54,8 @@
                         <TextBox x:Name="exename"  Grid.Row="2" Grid.Column="1" Height="20" Width="100" Padding="2" Margin="20 0" HorizontalAlignment="Center" FontSize="10" Visibility="Hidden" VerticalAlignment="Center" TextAlignment="Center" BorderBrush="Black"/>
                         <TextBlock x:Name="plrangelabel"  Grid.Row="1" Grid.Column="0" Text="Specify range you would like to download" Visibility="Hidden" HorizontalAlignment="Center" />
                         <TextBlock x:Name="exenamelabel"  Grid.Row="1" Grid.Column="1" Text="What did you name it?" HorizontalAlignment="Center" Visibility="Hidden" />
-
+                    
+                        
 
                     </Grid>
 
@@ -202,8 +206,10 @@
                     <TextBlock x:Name="pastedpopup" Grid.Row="0" Text="Pasted!" Foreground="Green" VerticalAlignment="Center" Margin="220 5 0 0" Visibility="Hidden" />
                     <TextBlock x:Name="addedpopup" Grid.Row="0" Text="Added!" Foreground="Green" VerticalAlignment="Center" Margin="220 5 0 0" Visibility="Hidden" />
 
+                    <TextBlock x:Name="currentversionlabel" FontSize="9" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 10 30 10" />
+
                     <TextBox  Grid.Row="1" x:Name="link" FontSize="12" Height="30" Width="500" Padding="5" Margin="0 3 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Black" />
-                    <Button Content="Clear" Background="Orange" Grid.Row="1" x:Name="clearlinks" Padding="2" Margin="10 3 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="clearlinks_Click" />
+                     <Button Content="Clear" Background="Orange" Grid.Row="1" x:Name="clearlinks" Padding="2" Margin="10 3 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="clearlinks_Click" />
 
 
                     <TextBlock Text="Convert or Trim a File" TextDecorations="underline"  Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Centaur" FontSize="16"  />

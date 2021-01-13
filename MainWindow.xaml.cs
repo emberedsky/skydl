@@ -25,17 +25,21 @@ namespace Skydl
 
     public partial class MainWindow : Window
     {
-        
+        string currentversion;
+        string versionlabeltext = "v1.0";
+        string latestversion = "1.0.0.0";
         public MainWindow()
         {
             InitializeComponent();
+            currentversionlabel.Text = versionlabeltext;
         }
 
 
 
+       
 
-
-
+        
+        
         DispatcherTimer tim = new DispatcherTimer();
 
         private void pasteclipboardbutton_Click(object sender, RoutedEventArgs e)
@@ -1738,6 +1742,9 @@ namespace Skydl
             changeconverttitlecheckbox.IsChecked = false;
             output.Text = "";
             trimconvercheckbox.IsChecked = false;
+            setpath.Visibility = Visibility.Visible;
+            pathifnotinsystemalrdylabel.Visibility = Visibility.Visible;
+            
 
         }
 
@@ -1950,6 +1957,11 @@ namespace Skydl
                 clearlinks.Foreground = Brushes.FloralWhite;
 
                 borderforoutlinecolor.BorderBrush = Brushes.White;
+
+                currentversionlabel.Foreground = Brushes.White;
+
+                convertarea.Stroke = Brushes.White;
+                pathrectangle.Stroke = Brushes.White;
             }
             else
             {
@@ -2029,6 +2041,11 @@ namespace Skydl
                 clearlinks.Foreground = Brushes.Black;
 
                 borderforoutlinecolor.BorderBrush = Brushes.Black;
+
+                currentversionlabel.Foreground = Brushes.Black;
+
+                convertarea.Stroke = Brushes.Black;
+                pathrectangle.Stroke = Brushes.Black;
 
 
             }
@@ -3077,9 +3094,22 @@ namespace Skydl
             help.Show();
         }
 
+        
         private void updateskydlbutton_Click(object sender, RoutedEventArgs e)
         {
+            
+            currentversion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
+            if (currentversion == latestversion)
+            {
+                MessageBox.Show("You have the latest version installed: " + currentversionlabel.Text, "No Later Version Found", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            
+            else
+            {
+                System.Diagnostics.Process.Start("https://github.com/emberedsky/skydl/releases");
+            }
+           
         }
     }
 }
