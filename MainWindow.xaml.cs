@@ -493,7 +493,7 @@ namespace Skydl
 
             if (specifycode.IsChecked is true && portioncheck.IsChecked is true)
             {
-                MessageBox.Show("You can't specify a code while downloading a portion of a video", "Format Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("You can't specify a code while downloading a portion of a video. Use the Chosoe Format box to select a format instead", "Format Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
                 specifycode.IsChecked = false;
             }
 
@@ -915,7 +915,7 @@ namespace Skydl
 
                 if (fromh.Text.Contains("00") && fromm.Text.Contains("00") && froms.Text.Contains("00") && toh.Text.Contains("00") && tom.Text.Contains("00") && tos.Text.Contains("00"))
                 {
-                    MessageBox.Show("You did not include a 'from' or 'to' time signature." + "\r\n" + "\r\n" + "If you intend to download the video in its entirety please uncheck the portion checkbox");
+                    MessageBox.Show("You did not include a 'from' or 'to' time signature." + "\r\n" + "\r\n" + "If you intend to download the video in its entirety please uncheck the portion checkbox","No Time Detected",MessageBoxButton.OK,MessageBoxImage.Information);
                     gate = "nopass";
                 }
                 else
@@ -923,8 +923,8 @@ namespace Skydl
                    
                         if (toh.Text.Contains("00") && tom.Text.Contains("00") && tos.Text.Contains("00") && ToEnd.IsChecked is false)
                         {
-                            MessageBox.Show("You did not include a 'to' time signature." + "\r\n" + "\r\n" + "If you intend to download the video to the end please check the 'To End' checkbox");
-                            gate = "nopass";
+                            MessageBox.Show("You did not include a 'to' time signature." + "\r\n" + "\r\n" + "If you intend to download the video to the end please check the 'To End' checkbox", "No To Time Detected", MessageBoxButton.OK, MessageBoxImage.Information);
+                        gate = "nopass";
                         }
                         else
                         {
@@ -2087,6 +2087,14 @@ namespace Skydl
 
         private void prioritizehighestquality_Click(object sender, RoutedEventArgs e)
         {
+
+            if (specifycode.IsChecked is true && portioncheck.IsChecked is true)
+            {
+                MessageBox.Show("You cannot priotize highest quality while downloading a portion. Please use the Choose Format Box instead", "Format Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
+                prioritizehighestquality.IsChecked = false;
+            }
+
+
             if (prioritizehighestquality.IsChecked is true)
             {
                 if (thumbnail.IsChecked is true)
@@ -3082,24 +3090,34 @@ namespace Skydl
                    
                 });
 
-
-                if (err.Contains("operable program") is true)
+                if (err != null)
                 {
-                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "FFmpeg is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
-                    output.ScrollToEnd();
-                    MessageBox.Show("Ffmpeg was not recognized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Queue = 0;
-                    processingpopup.Visibility = Visibility.Hidden;
-                    abortbutton.Visibility = Visibility.Hidden;
+                    if (err.Contains("operable program") is true)
+                    {
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "FFmpeg is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                        output.ScrollToEnd();
+                        MessageBox.Show("Ffmpeg was not recognized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
 
+                    }
+                    else
+                    {
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+                    }
                 } else
                 {
-                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
                     output.ScrollToEnd();
                     Queue = 0;
                     processingpopup.Visibility = Visibility.Hidden;
                     abortbutton.Visibility = Visibility.Hidden;
                 }
+                
 
                
                 formatbox.SelectedItem = null;
