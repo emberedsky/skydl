@@ -1320,7 +1320,7 @@ namespace Skydl
                         processingpopup.Visibility = Visibility.Hidden;
                         abortbutton.Visibility = Visibility.Hidden;
 
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
                     }
                     else
                     {
@@ -2229,7 +2229,7 @@ namespace Skydl
                         processingpopup.Visibility = Visibility.Hidden;
                         abortbutton.Visibility = Visibility.Hidden;
 
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
                     }
                     else
                     {
@@ -2391,7 +2391,7 @@ namespace Skydl
                         processingpopup.Visibility = Visibility.Hidden;
                         abortbutton.Visibility = Visibility.Hidden;
 
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
                     }
                     else
                     {
@@ -2662,7 +2662,7 @@ namespace Skydl
                         processingpopup.Visibility = Visibility.Hidden;
                         abortbutton.Visibility = Visibility.Hidden;
 
-                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
                     }
                     else
                     {
