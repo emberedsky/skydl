@@ -1,11 +1,11 @@
-﻿<Window x:Class="ydl.MainWindow"
+﻿<Window x:Class="Skydl.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ydl"
+        xmlns:local="clr-namespace:Skydl"
         mc:Ignorable="d" FontSize="12"
-        Title="Skydl" Height="830" Width="645"
+        Title="Skydl" Height="800" Width="645"
         ResizeMode="CanMinimize"
         Background="PeachPuff" FontFamily="Segoe UI Semilight" Foreground="Black" >
 
@@ -80,7 +80,7 @@
 
                         <Button x:Name="wipecachebutton" Content="Wipe cache" Grid.Row="0" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Background="LightSalmon" Padding="3" Click="wipecachebutton_Click" BorderBrush="Black" />
                         <Button x:Name="UpdateYoutubedlbutton" Content="Update Youtube DL" Grid.Row="0" Grid.Column="1" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Background="LightSalmon" Padding="3" Click="UpdateYoutubedlbutton_Click" BorderBrush="Black" />
-                        <CheckBox x:Name="setpath" Content="Set ydl/ffmpeg Path" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Click="setpath_Click" Unchecked="setpath_Click" />
+                        <CheckBox x:Name="setpath" Content="Add ydl/ffmpeg Path" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Click="setpath_Click" Unchecked="setpath_Click" />
                         <TextBlock x:Name="pathifnotinsystemalrdylabel" Text="(if not in system path already)" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="9" Margin=" 0 15 0 0" />
 
                         <Rectangle x:Name="pathrectangle" Grid.Row="2" Margin="2 2 10 2" StrokeDashArray="4" StrokeThickness="1" Stroke="Black" Visibility="Hidden" />
@@ -91,9 +91,9 @@
                         <TextBlock x:Name="pathorlabel" Margin="10 0 0 0" Text="or" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Visibility="Hidden" />
                         <Button x:Name="pathexplorerbutton"  Content="Use File Explorer" Padding="4" Grid.Row="2" Grid.Column="1" Background="#FFE9A2" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Visibility="Hidden" Click="SetpathfileButton_Click" />
                         <TextBlock x:Name="pathlabel" Text="Selected folder path:" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Visibility="Hidden" />
-                        <TextBox x:Name="dlpath" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="175" Height="20"  FontSize="9" TextAlignment="Center" Padding="2" IsReadOnly="True" Visibility="Hidden" BorderBrush="Black"/>
-                        <Button x:Name="copydlpathbutton" Content="Copy path" Background="#FFE9A2" FontSize="9" Margin="0 0 30 0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" Visibility="Hidden" Click="copydlpathbutton_Click" />
-                        <TextBlock x:Name="copiedpopupfordlpath" Text="Copied!" Foreground="Green" FontSize="9" Margin="17 0 30 0" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Visibility="Hidden" />
+                        <TextBox x:Name="dlpath" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="175" Height="20"  FontSize="9" TextAlignment="Center" Padding="2" IsReadOnly="True" Visibility="Hidden" BorderBrush="Black" Margin="0 0 20 0"/>
+                        <Button x:Name="adddlpathbutton" Content="Add to Path" Background="LightSalmon" Margin="10 0 30 0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" Visibility="Hidden" Click="adddlpathbutton_Click" BorderBrush="Black"/>
+                        <TextBlock x:Name="addedpopupfordlpath" Text="Added!" Foreground="Green" FontSize="16"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" Visibility="Hidden" />
 
 
                         <CheckBox x:Name="thumbnail" Content="Embed thumbnail" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin=" 5 0 0 0" />
@@ -188,7 +188,7 @@
                         <TextBlock x:Name="copiedpopupfordownloadpath" Text="Copied!" Foreground="Green" FontSize="10" Margin="90 0 0 1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="2" Visibility="Hidden" />
                         <Button x:Name="DownloadLocationButton" Background="#FFE9A2" Foreground="Blue" Content="Choose Download Location" Grid.Column="0" Margin="10 0 10 10" FontSize="12" Padding="5" VerticalAlignment="Top" Click="DownloadLocationButton_Click"/>
                         <TextBox x:Name="Downloadlocation" FontSize="12" TextAlignment="Center" Height="25" Width="220" Padding="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 2 10 0" BorderBrush="Black"/>
-                        <Button x:Name="downloadlocationpathcopybutton" Grid.Column="1" Margin="0 10 0 0" Background="#FFE9A2" Content="Copy path" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="3" Click="downloadlocationpathcopybutton_Click"  />
+                        <Button x:Name="downloadlocationpathcopybutton" Grid.Column="1" Margin="0 10 0 0" Background="#FFE9A2" Content="Copy path" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="3" Click="downloadlocationpathcopybutton_Click"  />
 
 
                     </Grid>
@@ -279,7 +279,7 @@
 
 
                         <TextBox  Grid.Column="1" Margin="5" Padding="3" x:Name="filechosen" Width="250" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" IsReadOnly="True" TextChanged="filechosen_TextChanged" BorderBrush="Black"/>
-                        <Button x:Name="convertpathcopybutton" Grid.Column="2" Background="#FFE9A2" Margin="5" Content="Copy path" FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="3" Click="convertpathcopybutton_Click"  />
+                        <Button x:Name="convertpathcopybutton" Grid.Column="2" Background="#FFE9A2" Margin="5" Content="Copy path" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="3" Click="convertpathcopybutton_Click"  />
                         <TextBlock x:Name="copiedpopupforconvertpath" Text="Copied!" Foreground="Green" FontSize="9" VerticalAlignment="Center" Grid.Column="2" Margin=" 58 0 0 0" Visibility="Hidden" />
 
 
@@ -291,12 +291,12 @@
 
 
 
-
-                    <TextBox x:Name="output" Grid.Row="7" Margin="10 10 10 0" Padding="3" Height="180"   IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" BorderBrush="Black" FontFamily="Lucida Console"/>
+                    <TextBlock Text="output" Grid.Row="7" Margin="10 0 0 0" Foreground="Gray"/>
+                    <TextBox x:Name="output" Grid.Row="7" Margin="10 20 10 0" Padding="3" Height="140"   IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" BorderBrush="Black" FontFamily="Lucida Console" FontSize="10"/>
                     <TextBlock x:Name="processingpopup" Text="Processing . . .        " Grid.Row="8"  Padding="3" TextAlignment="Right" Visibility="Hidden" VerticalAlignment="Center" />
                     <Button x:Name="abortbutton" Content="Abandon Ship" Grid.Row="8"  Padding="3" Foreground="Red" HorizontalAlignment="Right" Visibility="Hidden"  Margin="0 5 130 5" VerticalAlignment="Bottom" Click="abortbutton_Click" />
                     <Button x:Name="helpbutton" Content="Help" Grid.Row="8"  Padding="3" Foreground="White" Background="Blue" HorizontalAlignment="Left" Visibility="Visible" Margin="20 0 0 0 "  VerticalAlignment="Center" Click="helpbutton_Click" BorderBrush="Black" />
-                    <Button x:Name="resetbutton" Content="Reset Everything" Margin="115 5 5 5" Grid.Row="8"  HorizontalAlignment="Left" Padding="3" Foreground="Red" Background="FloralWhite" Click="resetbutton_Click" BorderBrush="Black"/>
+                    <Button x:Name="resetbutton" Content="Reset Everything" Margin="115 5 5 5" Grid.Row="8"  HorizontalAlignment="Left" Padding="3" Foreground="Red" Background="FloralWhite" Click="resetbutton_Click" BorderBrush="Black" FontSize="13"/>
                     <Button x:Name="clearoutputbutton" Content="Clear Output" Grid.Row="8"  Padding="3" Foreground="Blue" HorizontalAlignment="Center" Visibility="Visible" Margin="20 0 0 0 "  VerticalAlignment="Center" Click="clearoutputbutton_Click" BorderBrush="Black" Background="FloralWhite"/>
 
 

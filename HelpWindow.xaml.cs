@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace ydl
+
+namespace Skydl
 {
     
     public partial class HelpWindow : Window
@@ -26,6 +16,31 @@ namespace ydl
         {
 
             this.Close();
+        }
+
+        private void ydlwebsitebutton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://youtube-dl.org/");
+        }
+
+        private void ffmpegwebsitebutton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://ffmpeg.org/download.html");
+        }
+
+        private void walkthroughvideobutton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=5axVgHHDBvU");
+        }
+
+        private void atomicwebsitebutton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://atomicparsley.sourceforge.net/");
+        }
+
+        private void TipButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://paypal.me/dawnoverdusk");
         }
     }
 }

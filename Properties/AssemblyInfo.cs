@@ -7,13 +7,14 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ydl")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ydl")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
-[assembly: AssemblyTrademark("")]
+
+[assembly: AssemblyTitle("Skydl")]
+[assembly: AssemblyDescription("GUI for youtube-dl and ffmpeg")]
+[assembly: AssemblyConfiguration("Visual Studio")]
+[assembly: AssemblyCompany("WPF")]
+[assembly: AssemblyProduct("Skydl")]
+[assembly: AssemblyCopyright("Open source")]
+[assembly: AssemblyTrademark("youtube-dl")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -51,5 +52,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1")]
+[assembly: AssemblyFileVersion("1.1")]

@@ -20,7 +20,7 @@ using System.Windows.Threading;
 
 
 
-namespace ydl
+namespace Skydl
 {
 
     public partial class MainWindow : Window
@@ -28,7 +28,6 @@ namespace ydl
         
         public MainWindow()
         {
-
             InitializeComponent();
         }
 
@@ -43,19 +42,19 @@ namespace ydl
         {
             if (Clipboard.ContainsText() is false)
             {
-                MessageBox.Show("There is nothing in your clipboard");
+                MessageBox.Show("There is nothing in your clipboard", "Empty Clipboard", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
             else
                 if (Clipboard.GetText().Contains(" ") is true)
             {
-                MessageBox.Show("There are spaces in your clipboard, there should not be any spaces");
+                MessageBox.Show("There are spaces in your clipboard, there should not be any spaces", "Empty Characters Detected", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
                 if (link.Text != "")
                 {
-                    MessageBoxResult cnfrm = MessageBox.Show("This will overwrite your link(s), are you okay with that?", "Overwrite Confirmation", MessageBoxButton.YesNo);
+                    MessageBoxResult cnfrm = MessageBox.Show("This will overwrite your link(s), are you okay with that?", "Overwrite Confirmation", MessageBoxButton.YesNo,MessageBoxImage.Warning);
                     if (cnfrm == MessageBoxResult.Yes)
                     {
                         link.Text = Clipboard.GetText();
@@ -84,27 +83,27 @@ namespace ydl
         {
             if (Clipboard.ContainsText() is false)
             {
-                MessageBox.Show("There is nothing in your clipboard");
+                MessageBox.Show("There is nothing in your clipboard", "Empty Clipboard", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
             else
             {
                 if (Clipboard.GetText().Contains(" ") is true)
                 {
-                    MessageBox.Show("There are spaces in your clipboard, there should not be any spaces","Empty Characters Detected");
+                    MessageBox.Show("There are spaces in your clipboard, there should not be any spaces", "Empty Characters Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     if (link.Text.Contains(Clipboard.GetText()) is true)
                     {
-                        MessageBox.Show("You already have this link included!", "Duplicate Warning");
+                        MessageBox.Show("You already have this link included!", "Duplicate Warning", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                     else
                     {
                         if (playlistcheckbox.IsChecked is true)
                         {
-                            MessageBox.Show("You have the playlist checkbox checked. If you would like to download multiple playlists with specific ranges, do one at a time. This is to distinguish which playlist the range is intended for. If you would like to download multiple playlists in their entirety, uncheck the playlist checkbox and treat them as normal links","Playlist Box is Checked");
+                            MessageBox.Show("You have the playlist checkbox checked. If you would like to download multiple playlists with specific ranges, do one at a time. This is to distinguish which playlist the range is intended for. If you would like to download multiple playlists in their entirety, uncheck the playlist checkbox and treat them as normal links", "Multiple Playlists", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
@@ -125,7 +124,7 @@ namespace ydl
         {
             if (Downloadlocation.Text == "")
             {
-                MessageBox.Show("You must choose a download location first!", "No Selection Detected");
+                MessageBox.Show("You must choose a download location first!", "Empty Dowlnload Location Field", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -188,7 +187,7 @@ namespace ydl
             if (portioncheck.IsChecked is true & playlistcheckbox.IsChecked is true)
             {
 
-                MessageBox.Show("You can't download a portion of one video that's in a playlist." + "\r\n" + "\r\n" + "Uncheck the 'portion' checkbox if this is a playlist");
+                MessageBox.Show("You can't download a portion of one video that's in a playlist." + "\r\n" + "\r\n" + "Uncheck the 'portion' checkbox if this is a playlist", "Portion and Playlist Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
                 playlistcheckbox.IsChecked = false;
 
             }
@@ -263,7 +262,7 @@ namespace ydl
                 pathexplorerbutton.Visibility = Visibility.Hidden;
                 pathlabel.Visibility = Visibility.Hidden;
                 dlpath.Visibility = Visibility.Hidden;
-                copydlpathbutton.Visibility = Visibility.Hidden;
+                adddlpathbutton.Visibility = Visibility.Hidden;
                 dlpath.Text = "";
 
             }
@@ -272,7 +271,7 @@ namespace ydl
             {
 
                 dlpath.Text = "";
-                copydlpathbutton.Visibility = Visibility.Visible;
+                adddlpathbutton.Visibility = Visibility.Visible;
                 pathdragfolderherelabel.Visibility = Visibility.Visible;
                 pathrectangle.Visibility = Visibility.Visible;
                 pathorlabel.Visibility = Visibility.Visible;
@@ -304,7 +303,7 @@ namespace ydl
 
             if (playlistcheckbox.IsChecked is true & portioncheck.IsChecked is true)
             {
-                MessageBox.Show("You can't download a portion of one video that's in a playlist." + "\r\n" + "\r\n" + "Uncheck the 'playlist' checkbox  if this is an individual video that you would like to download a portion of");
+                MessageBox.Show("You can't download a portion of one video that's in a playlist." + "\r\n" + "\r\n" + "Uncheck the 'playlist' checkbox  if this is an individual video that you would like to download a portion of", "Portion and Playlist Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
                 portioncheck.IsChecked = false;
 
             }
@@ -865,18 +864,13 @@ namespace ydl
         string playlistprereq = "";
         string thumbnailprereq = "";
         string subtitlesprereq = "";
-        string dlpathprereq = "";
         string formatprereq = "";
-        string formatcodeprereq = "";
         string downloadloc = "";
         string alwaysthereprereq;
         string tosequenceforportion;
         string formatforportion;
         string fetchedurl;
         string ffmpegpresetspeed = " -preset veryfast ";
-
-        
-
 
 
         int Queue = 0;
@@ -885,15 +879,12 @@ namespace ydl
         private async void Download_Click(object sender, RoutedEventArgs e)
 
         {
-
-            dlpathprereq = "";
             playlistprereq = "";
             thumbnailprereq = "";
             subtitlesprereq = "";
             name = "youtube-dl.exe ";
-            formatcodeprereq = "";
             formatprereq = "";
-            alwaysthereprereq = " -ciw --no-mtime";
+            alwaysthereprereq = "-ciw --no-mtime";
             tosequenceforportion = "";
             fetchedurl = "";
 
@@ -1082,21 +1073,17 @@ namespace ydl
             {
                 if (dlpath.Text == "")
                 {
-                    MessageBox.Show("You did not include the path to youtube-dl. If it's in your system path already, please uncheck the 'set path' checkbox");
+                    MessageBox.Show("You have set path checked but you did not set the path. If it's in your system path already, please uncheck the 'set path' checkbox", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
-                else
-                {
-                    dlpathprereq = "cd " + dlpath.Text;
-                }
+                
             }
-
 
             if (playlistcheckbox.IsChecked is true)
             {
                 if (plrange.Text == "" && plAll.IsChecked is false)
                 {
-                    MessageBox.Show("You did not include the range of the playlist items." + "\r\n" + "\r\n" + "If you wanted items 4, 7 and 11 through 17, for example, you would write 4,7,11-17." + "\r\n" + "\r\n" + "If you want to download the entire playlist please check the 'All' checkbox");
+                    MessageBox.Show("You did not include the range of the playlist items." + "\r\n" + "\r\n" + "If you wanted items 4, 7 and 11 through 17, for example, you would write 4,7,11-17." + "\r\n" + "\r\n" + "If you want to download the entire playlist please check the 'All' checkbox", "Empty Range Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
 
@@ -1105,7 +1092,7 @@ namespace ydl
 
                     if (plrange.Text.Contains(" ") is true)
                     {
-                        MessageBox.Show("Remove all spaces from the playlist range");
+                        MessageBox.Show("Remove all spaces from the playlist range", "Empty Characters Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                         gate = "nopass";
                     }
                     else
@@ -1125,7 +1112,7 @@ namespace ydl
 
             if (link.Text.Length == 0 || link.Text.Contains(" ") is true)
             {
-                MessageBox.Show("You have not pasted any valid links");
+                MessageBox.Show("You have not pasted any valid links", "Empty Link(s) Field", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
             }
             else
@@ -1136,15 +1123,14 @@ namespace ydl
                 {
                     if (exename.Text == "")
                     {
-                        MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox");
-                        gate = "nopass";
+                        MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox", "Empty Name Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                     else
                     {
                         if (exename.Text.Contains(".exe") is true)
                         {
-                            MessageBox.Show("Do not include .exe in the name");
+                            MessageBox.Show("Do not include .exe in the name", "Exe Input Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                             gate = "nopass";
                         }
 
@@ -1175,7 +1161,7 @@ namespace ydl
                 }
             }
 
-                if (gate == "ffmpegportion")
+            if (gate == "ffmpegportion")
             {
                 if (portionformatselection.SelectedIndex == 0)
                 {
@@ -1228,7 +1214,14 @@ namespace ydl
 
             if (specifycode.IsChecked is true)
             {
-                formatcodeprereq = " -f " + formatcode.Text;
+                formatprereq = " -f " + formatcode.Text;
+                
+            }
+
+            if (link.Text.Contains("&t=") is true)
+            {
+                MessageBox.Show("Timestamps with ampersands (&) are not allowed, please remove it from your link (should be denoted with t=#)","Timestamp Detected",MessageBoxButton.OK,MessageBoxImage.Information);
+                gate = "nopass";
             }
 
             if (gate == "reset")
@@ -1257,7 +1250,7 @@ namespace ydl
                 processingpopup.Visibility = Visibility.Visible;
                 abortbutton.Visibility = Visibility.Visible;
 
-
+                output.AppendText(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatprereq + playlistprereq + downloadloc + link.Text + "\r\n" + "\r\n" + "Processing . . ." + "\r\n" + "\r\n");
 
                 ProcessStartInfo outie = new ProcessStartInfo("cmd");
                 outie.UseShellExecute = false;
@@ -1266,15 +1259,16 @@ namespace ydl
                 outie.RedirectStandardError = true;
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
-                proc.StandardInput.WriteLine(dlpathprereq);
-                proc.StandardInput.WriteLine(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatcodeprereq + formatprereq + playlistprereq + downloadloc + link.Text);
+                proc.StandardInput.WriteLine(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatprereq + playlistprereq + downloadloc + link.Text);
                 link.Text = "";
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
 
                 string line;
-                
+                string err;
+                err = "";
+
                 await Task.Run(() =>
                     {
                         Queue = 1;
@@ -1306,21 +1300,51 @@ namespace ydl
                             }
                         }
 
+                        if (proc.StandardError.EndOfStream is false)
+                        {
+                            err = proc.StandardError.ReadToEnd();
+                        }
+
+
                     });
 
-                output.AppendText(proc.StandardError.ReadToEnd());
-                output.ScrollToEnd();
-                Queue = 0;
-                processingpopup.Visibility = Visibility.Hidden;
-                abortbutton.Visibility = Visibility.Hidden;
+                if (err == "")
+                {
+                    output.ScrollToEnd();
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
 
-                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "Completed"));
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                }
+                else
+                {
+                    if (err.Contains("is not recognized") is true)
+                    {
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        output.AppendText(err);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+
+                    }
+                }
 
 
             }
             else
             {
-                MessageBox.Show("Something is in queue");
+                MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 
@@ -1345,19 +1369,20 @@ namespace ydl
                 outie.RedirectStandardError = true;
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
-                proc.StandardInput.WriteLine(dlpathprereq);
                 proc.StandardInput.WriteLine(name + "-f best -g " + link.Text);
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
-
                 string line;
+                fetchedurl = "";
+                string err;
+                err = "";
 
                 await Task.Run(() =>
                 {
                     Queue = 1;
 
-                    this.Dispatcher.Invoke(() => output.AppendText(name + "-f best -g " + link.Text + "\r\n" + "Processing . . ." + "\r\n" + "\r\n"));
+                    this.Dispatcher.Invoke(() => output.AppendText(name + "-f best -g " + link.Text + "\r\n" + "\r\n" + "Processing . . ." + "\r\n" + "\r\n"));
 
                     while (proc.StandardOutput.EndOfStream is false)
                     {
@@ -1365,33 +1390,12 @@ namespace ydl
 
                         try
                         {
-                            this.Dispatcher.Invoke(() => output.AppendText(proc.StandardOutput.ReadLine() + "\r\n"));
-                            this.Dispatcher.Invoke(() => output.ScrollToEnd());
-                            
+                            line = proc.StandardOutput.ReadLine();
 
-
-                            if ((line = proc.StandardOutput.ReadLine()) != null)
+                            if (line.Length > 200)
                             {
-                                line = proc.StandardOutput.ReadLine();
-
-                                this.Dispatcher.Invoke(() => output.AppendText(line + "\r\n"));
-                                this.Dispatcher.Invoke(() => output.ScrollToEnd());
-                                
-
-
-                                
-                                    
-                                if (line != null && line != "")
-                                {
-                                    
-                                    fetchedurl = line;
-                                    
-                                }
-
-                                
+                                fetchedurl = line;
                             }
-
-
 
                         }
                         catch (Exception ex)
@@ -1403,24 +1407,59 @@ namespace ydl
                         }
                     }
 
-                    
+                    if (proc.StandardError.EndOfStream is false)
+                    {
+                        err = proc.StandardError.ReadToEnd();
+                    }
 
                 });
 
-                
-                output.AppendText(proc.StandardError.ReadToEnd());
-                output.ScrollToEnd();
+
+                if (err == "")
+                {
+
+                    if (fetchedurl == "")
+                    {
+                        
+                        MessageBox.Show("A url for media extraction from a direct link was unable to be fetched, please try a different link", "Could Not Extract Link", MessageBoxButton.OK, MessageBoxImage.Information);
+                    } 
+                    
+                    else
+                    {
+                        output.ScrollToEnd();
+                        await ffmpegportioncontinued();
+                    }
+                    
+                }
+                else
+                {
+                    if (err.Contains("is not recognized") is true)
+                    {
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        output.AppendText(err);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+
+                    }
+                }
 
                 
-
-                await ffmpegportioncontinued();
-
-
 
             }
             else
             {
-                MessageBox.Show("Something is in queue");
+                MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }
@@ -1428,8 +1467,8 @@ namespace ydl
         internal async Task ffmpegportioncontinued()
         {
 
-            
 
+            
             ProcessStartInfo outie = new ProcessStartInfo("cmd");
             outie.UseShellExecute = false;
             outie.RedirectStandardOutput = true;
@@ -1443,7 +1482,8 @@ namespace ydl
             proc.StandardInput.Close();
 
             string line;
-
+            string err;
+            err = "";
             await Task.Run(() =>
             {
                 Queue = 1;
@@ -1454,6 +1494,8 @@ namespace ydl
                     {
                         try
                         {
+                            err = proc.StandardError.ReadLine();
+
                             this.Dispatcher.Invoke(() => output.AppendText(proc.StandardError.ReadLine() + "\r\n"));
                             this.Dispatcher.Invoke(() => output.ScrollToEnd());
 
@@ -1469,7 +1511,7 @@ namespace ydl
 
                     try
                     {
-                        this.Dispatcher.Invoke(() => output.AppendText(proc.StandardOutput.ReadLine() + "\r\n"));
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + proc.StandardOutput.ReadLine() + "\r\n" + "\r\n"));
                         this.Dispatcher.Invoke(() => output.ScrollToEnd());
 
                     }
@@ -1483,28 +1525,45 @@ namespace ydl
                 }
 
 
+               
 
             });
 
-            output.AppendText(proc.StandardError.ReadToEnd());
-            output.ScrollToEnd();
-            Queue = 0;
-            processingpopup.Visibility = Visibility.Hidden;
-            abortbutton.Visibility = Visibility.Hidden;
+
+
+
+
+            if (err.Contains("operable program") is true)
+            {
+                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "FFmpeg is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                output.ScrollToEnd();
+                MessageBox.Show("Ffmpeg was not recognized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                Queue = 0;
+                processingpopup.Visibility = Visibility.Hidden;
+                abortbutton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
+                output.ScrollToEnd();
+                Queue = 0;
+                processingpopup.Visibility = Visibility.Hidden;
+                abortbutton.Visibility = Visibility.Hidden;
+            }
+
             link.Text = "";
 
-            this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "Completed" + "\r\n"));
+            
         }
         private void copycommandbutton_Click(object sender, RoutedEventArgs e)
         {
 
-            dlpathprereq = "";
+            
 
             playlistprereq = "";
             thumbnailprereq = "";
             subtitlesprereq = "";
             name = "youtube-dl.exe ";
-            formatcodeprereq = "";
             formatprereq = "";
             alwaysthereprereq = " -ciw --no-mtime";
 
@@ -1535,13 +1594,10 @@ namespace ydl
             {
                 if (dlpath.Text == "")
                 {
-                    MessageBox.Show("You did not include the path to youtube-dl. If it's in your system path already, please uncheck the 'set path' checkbox");
+                    MessageBox.Show("You have set path checked but you did not set the path. If it's in your system path already, please uncheck the 'set path' checkbox", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
-                else
-                {
-                    dlpathprereq = "cd " + dlpath.Text;
-                }
+
             }
 
 
@@ -1549,7 +1605,7 @@ namespace ydl
             {
                 if (plrange.Text == "" && plAll.IsChecked is false)
                 {
-                    MessageBox.Show("You did not include the range of the playlist items." + "\r\n" + "\r\n" + "If you wanted items 4, 7 and 11 through 17, for example, you would write 4,7,11-17." + "\r\n" + "\r\n" + "If you want to download the entire playlist please check the 'All' checkbox");
+                    MessageBox.Show("You did not include the range of the playlist items." + "\r\n" + "\r\n" + "If you wanted items 4, 7 and 11 through 17, for example, you would write 4,7,11-17." + "\r\n" + "\r\n" + "If you want to download the entire playlist please check the 'All' checkbox", "Empty Range Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
 
@@ -1558,7 +1614,7 @@ namespace ydl
 
                     if (plrange.Text.Contains(" ") is true)
                     {
-                        MessageBox.Show("Remove all spaces from the playlist range");
+                        MessageBox.Show("Remove all spaces from the playlist range", "Empty Characters Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                         gate = "nopass";
                     }
                     else
@@ -1585,7 +1641,7 @@ namespace ydl
 
             if (link.Text.Length == 0 || link.Text.Contains(" ") is true)
             {
-                MessageBox.Show("You have not pasted any valid links");
+                MessageBox.Show("You have not pasted any valid links", "Empty Link or Spaces in Link Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
             }
             else
@@ -1596,7 +1652,7 @@ namespace ydl
                 {
                     if (exename.Text == "")
                     {
-                        MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox");
+                        MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox", "Empty Name Field", MessageBoxButton.OK, MessageBoxImage.Information);
                         gate = "nopass";
                     }
 
@@ -1604,7 +1660,7 @@ namespace ydl
                     {
                         if (exename.Text.Contains(".exe") is true)
                         {
-                            MessageBox.Show("Do not include .exe in the name");
+                            MessageBox.Show("Do not include .exe in the name", "Exe Input Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                             gate = "nopass";
                         }
 
@@ -1627,26 +1683,22 @@ namespace ydl
 
             if (specifycode.IsChecked is true)
             {
-                formatcodeprereq = " -f " + formatcode.Text;
+                formatprereq = " -f " + formatcode.Text;
             }
 
             if (gate == "reset")
             {
                 if (Downloadlocation.Text == "")
                 {
-                    MessageBox.Show("You did not choose a Download Location");
+                    MessageBox.Show("You did not choose a Download Location", "Empty Download Location Field", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     downloadloc = " -o " + "\"" + Downloadlocation.Text + "\\%(title)s.%(ext)s" + "\" ";
-                    if (setpath.IsChecked is true)
-                    {
-                        Clipboard.SetText(dlpathprereq + "\r\n" + name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatcodeprereq + formatprereq + playlistprereq + downloadloc + link.Text);
-                    }
-                    else
-                    {
-                        Clipboard.SetText(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatcodeprereq + formatprereq + playlistprereq + downloadloc + link.Text);
-                    }
+                   
+                    
+                    Clipboard.SetText(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatprereq + playlistprereq + downloadloc + link.Text);
+                    
                     copiedpopupcopycommand.Visibility = Visibility.Visible;
 
                     tim.Tick += new EventHandler(hidecopied);
@@ -1727,7 +1779,7 @@ namespace ydl
                 string[] fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
                 if (System.IO.Path.GetExtension(fileList[0]) == "")
                 {
-                    this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Choose a file to convert, not a folder")));
+                    this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Choose a file to convert, not a folder", "Folder Chosen", MessageBoxButton.OK, MessageBoxImage.Information)));
                     filechosen.Text = "";
                 }
                 else
@@ -1736,7 +1788,7 @@ namespace ydl
 
                 if ((System.IO.Path.GetExtension(fileList[0]) == ".pdf") || (System.IO.Path.GetExtension(fileList[0]) == ".txt") || (System.IO.Path.GetExtension(fileList[0]) == ".dll"))
                 {
-                    this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Please choose a convertable file with an audio or video extension")));
+                    this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Please choose a convertable file with an audio or video extension", "Improper Extension Detected", MessageBoxButton.OK, MessageBoxImage.Information)));
                     filechosen.Text = "";
                 }
                 else
@@ -1757,14 +1809,14 @@ namespace ydl
 
                 if (System.IO.Path.GetExtension(fileList[0]) == ".exe")
                 {
-                    this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Choose the folder that youtube-dl exists inside of, not an exe file")));
+                    this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Choose the folder that youtube-dl exists inside of, not an exe file", "Executable Detected", MessageBoxButton.OK, MessageBoxImage.Information)));
                     dlpath.Text = "";
                 }
                 else
                 {
                     if (System.IO.Path.GetExtension(fileList[0]) != "")
                     {
-                        this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Choose the folder that youtube-dl exists inside of, not a file")));
+                        this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Choose the folder that youtube-dl exists inside of, not a file", "File Input Detected", MessageBoxButton.OK, MessageBoxImage.Information)));
                         dlpath.Text = "";
                     }
                     else
@@ -1776,28 +1828,13 @@ namespace ydl
             }
         }
 
-        private void copydlpathbutton_Click(object sender, RoutedEventArgs e)
-        {
-            if (dlpath.Text == "")
-            {
-                this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("There is no folder path chosen!")));
-            }
-            else
-            {
-                Clipboard.SetText(dlpath.Text);
-                copiedpopupfordlpath.Visibility = Visibility.Visible;
-
-                tim.Tick += new EventHandler(hidecopied);
-                tim.Interval = new TimeSpan(0, 0, 1);
-                tim.Start();
-            }
-        }
+       
 
         private void convertpathcopybutton_Click(object sender, RoutedEventArgs e)
         {
             if (filechosen.Text == "")
             {
-                this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("There is no file path chosen!")));
+                this.Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("There is no file path chosen!", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information)));
             }
             else
             {
@@ -1813,9 +1850,14 @@ namespace ydl
             }
         }
 
+        private void hideadded(object sender, EventArgs e)
+        {
+            addedpopupfordlpath.Visibility = Visibility.Hidden;
+        }
+
         private void hidecopied(object sender, EventArgs e)
         {
-            copiedpopupfordlpath.Visibility = Visibility.Hidden;
+            
             copiedpopupforconvertpath.Visibility = Visibility.Hidden;
             copiedpopupfordownloadpath.Visibility = Visibility.Hidden;
             copiedpopupcopycommand.Visibility = Visibility.Hidden;
@@ -1832,7 +1874,7 @@ namespace ydl
         {
             if (darkmode.IsChecked is true)
             {
-                entireborder.Background = Brushes.DarkGray;
+                entireborder.Background = Brushes.DarkSlateGray;
                 output.Background = Brushes.Black;
                 output.Foreground = Brushes.White;
                 output.BorderBrush = Brushes.White;
@@ -1998,7 +2040,7 @@ namespace ydl
             {
                 if (thumbnail.IsChecked is true)
                 {
-                    MessageBox.Show("Embedding thumbnails is only supported with m4a and mp3/4, so uncheck thumbnails if you would rather prioritize quality. Otherwise keep this unchecked");
+                    MessageBox.Show("Embedding thumbnails is only supported with m4a and mp3/4, so uncheck thumbnails if you would rather prioritize quality. Otherwise keep this unchecked", "Atomic Parsley Limitation", MessageBoxButton.OK, MessageBoxImage.Information);
                     prioritizehighestquality.IsChecked = false;
                 }
                 else
@@ -2014,7 +2056,7 @@ namespace ydl
 
             if (specifycode.IsChecked is true && prioritizehighestquality.IsChecked is true)
             {
-                MessageBox.Show("You cannot priotize highest quality while specifying a format. Either uncheck the 'specify format' checkbox or keep prioritize highest quality unchecked", "Overlap Error");
+                MessageBox.Show("You cannot priotize highest quality while specifying a format. Either uncheck the 'specify format' checkbox or keep prioritize highest quality unchecked", "Format Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
                 prioritizehighestquality.IsChecked = false;
             }
         }
@@ -2022,14 +2064,14 @@ namespace ydl
         private async void seeformatsbutton_Click(object sender, RoutedEventArgs e)
         {
 
-            dlpathprereq = "";
+            
             name = "youtube-dl.exe ";
             gate = "reset";
 
 
             if (link.Text.Length == 0 || link.Text.Contains(" ") is true)
             {
-                MessageBox.Show("You have not pasted any valid links");
+                MessageBox.Show("You have not pasted any valid links", "Empty Link Field", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
             }
 
@@ -2038,20 +2080,17 @@ namespace ydl
             {
                 if (dlpath.Text == "")
                 {
-                    MessageBox.Show("You did not include the path to youtube-dl. If it's in your system path already, please uncheck the 'set path' checkbox");
+                    MessageBox.Show("You have set path checked but you did not set the path. If it's in your system path already, please uncheck the 'set path' checkbox", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
-                else
-                {
-                    dlpathprereq = "cd " + dlpath.Text;
-                }
+
             }
 
             if (execheckbox.IsChecked is true)
             {
                 if (exename.Text == "")
                 {
-                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox");
+                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox", "Empty Name Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
 
@@ -2059,7 +2098,7 @@ namespace ydl
                 {
                     if (exename.Text.Contains(".exe") is true)
                     {
-                        MessageBox.Show("Do not include .exe in the name");
+                        MessageBox.Show("Do not include .exe in the name", "Exe Input Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                         gate = "nopass";
                     }
 
@@ -2104,13 +2143,13 @@ namespace ydl
                 outie.RedirectStandardError = true;
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
-                proc.StandardInput.WriteLine(dlpathprereq);
-                proc.StandardInput.WriteLine(name + " -F " + link.Text);
+                proc.StandardInput.WriteLine(name + "-F " + link.Text);
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
+                string err;
+                err = "";
 
-                
 
                 await Task.Run(() =>
                 {
@@ -2133,18 +2172,51 @@ namespace ydl
                         }
                     }
 
+                    if (proc.StandardError.EndOfStream is false)
+                    {
+                        err = proc.StandardError.ReadToEnd();
+                    }
+
+
                 });
 
-                output.AppendText(proc.StandardError.ReadToEnd());
-                output.ScrollToEnd();
-                Queue = 0;
-                processingpopup.Visibility = Visibility.Hidden;
-                abortbutton.Visibility = Visibility.Hidden;
-                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "Completed" + "\r\n"));
+                if (err == "")
+                {
+                    output.ScrollToEnd();
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
+
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                }
+                else
+                {
+                    if (err.Contains("is not recognized") is true)
+                    {
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        output.AppendText(err);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+
+                    }
+                }
+
+
             }
             else
             {
-                MessageBox.Show("Something is in queue");
+                MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 
@@ -2155,7 +2227,7 @@ namespace ydl
         private async void UpdateYoutubedlbutton_Click(object sender, RoutedEventArgs e)
         {
 
-            dlpathprereq = "";
+            
             name = "youtube-dl.exe ";
             gate = "reset";
 
@@ -2163,7 +2235,7 @@ namespace ydl
             {
                 if (exename.Text == "")
                 {
-                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox");
+                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox", "Empty Name Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
 
@@ -2171,7 +2243,7 @@ namespace ydl
                 {
                     if (exename.Text.Contains(".exe") is true)
                     {
-                        MessageBox.Show("Do not include .exe in the name");
+                        MessageBox.Show("Do not include .exe in the name", "Exe Input Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                         gate = "nopass";
                     }
 
@@ -2189,17 +2261,15 @@ namespace ydl
 
                 }
             }
+
             if (setpath.IsChecked is true)
             {
                 if (dlpath.Text == "")
                 {
-                    MessageBox.Show("You did not include the path to youtube-dl. If it's in your system path already, please uncheck the 'set path' checkbox");
+                    MessageBox.Show("You have set path checked but you did not set the path. If it's in your system path already, please uncheck the 'set path' checkbox", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
-                else
-                {
-                    dlpathprereq = "cd " + dlpath.Text;
-                }
+
             }
 
             if (gate != "nopass")
@@ -2227,13 +2297,13 @@ namespace ydl
                 outie.RedirectStandardError = true;
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
-                proc.StandardInput.WriteLine(dlpathprereq);
-                proc.StandardInput.WriteLine(name + " -U ");
+                proc.StandardInput.WriteLine(name + "-U ");
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
 
-               
+                string err;
+                err = "";
 
                 await Task.Run(() =>
                 {
@@ -2256,29 +2326,173 @@ namespace ydl
                         }
                     }
 
+                    if (proc.StandardError.EndOfStream is false)
+                    {
+                        err = proc.StandardError.ReadToEnd();
+                    }
+                    
+
                 });
 
-                output.AppendText(proc.StandardError.ReadToEnd());
-                output.ScrollToEnd();
-                Queue = 0;
-                processingpopup.Visibility = Visibility.Hidden;
-                abortbutton.Visibility = Visibility.Hidden;
+                if (err == "")
+                {
+                    output.ScrollToEnd();
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
 
-                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "Completed" + "\r\n"));
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                } else
+                {
+                    if (err.Contains("is not recognized") is true)
+                    {
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to","System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+                    } else
+                    {
+                        output.AppendText(err);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+                       
+                    }
+                }
+
+                
             }
             else
             {
-                MessageBox.Show("Something is in queue");
+                MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 
 
         }
 
+        private async void adddlpathbutton_Click(object sender, RoutedEventArgs e)
+        {
+           
+
+            
+            gate = "reset";
+
+            if (dlpath.Text == "")
+            {
+                MessageBox.Show("There is no folder path chosen to add!", "No Path Detected", MessageBoxButton.OK, MessageBoxImage.Information);
+                gate = "nopass";
+            }
+
+            if (gate == "reset")
+            {
+                
+                await AddDLPath();
+            }
+                
+                
+            
+        }
+
+        internal async Task AddDLPath()
+
+        {
+
+            if (Queue == 0)
+            {
+                Queue = 1;
+                processingpopup.Visibility = Visibility.Visible;
+                abortbutton.Visibility = Visibility.Visible;
+
+
+
+                ProcessStartInfo outie = new ProcessStartInfo("cmd");
+                outie.UseShellExecute = false;
+                outie.RedirectStandardOutput = true;
+                outie.RedirectStandardInput = true;
+                outie.RedirectStandardError = true;
+                outie.CreateNoWindow = true;
+                var proc = Process.Start(outie);
+                proc.StandardInput.WriteLine("setx PATH \"%PATH%;" + dlpath.Text + "\"");
+                proc.StandardInput.Flush();
+                proc.StandardInput.Close();
+
+                string err;
+                err = "";
+
+
+                await Task.Run(() =>
+                {
+                    Queue = 1;
+                    while (proc.StandardOutput.EndOfStream is false)
+                    {
+
+
+                        try
+                        {
+                            err = proc.StandardError.ReadLine();
+                            this.Dispatcher.Invoke(() => output.AppendText(proc.StandardOutput.ReadLine() + "\r\n"));
+                            this.Dispatcher.Invoke(() => output.ScrollToEnd());
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex is TaskCanceledException)
+                            {
+                                proc.Kill();
+                            }
+                        }
+                    }
+
+                });
+
+                if (err == "")
+                {
+
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
+                    output.ScrollToEnd();
+
+                    setpath.IsChecked = false;
+                    setpath.Visibility = Visibility.Hidden;
+                    pathifnotinsystemalrdylabel.Visibility = Visibility.Hidden;
+
+                    addedpopupfordlpath.Visibility = Visibility.Visible;
+                    
+
+                    tim.Tick += new EventHandler(hideadded);
+                    tim.Interval = new TimeSpan(0, 0, 1);
+                    tim.Start();
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
+                } else
+                {
+                    output.AppendText("\r\n" + "\r\n" + err);
+                    output.AppendText("\r\n" + "\r\n" + "Something went wrong, try adding it manually or try again. If you do not know how to add it manually, press on help." + "\r\n" + "\r\n");
+                    output.ScrollToEnd();
+                    setpath.IsChecked = false;
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
+                }
+
+                
+            }
+            else
+            {
+                MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+
+
+        }
         private async void wipecachebutton_Click(object sender, RoutedEventArgs e)
         {
 
-            dlpathprereq = "";
+            
             name = "youtube-dl.exe ";
             gate = "reset";
 
@@ -2286,7 +2500,7 @@ namespace ydl
             {
                 if (exename.Text == "")
                 {
-                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox");
+                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox","Empty Name Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
 
@@ -2294,7 +2508,7 @@ namespace ydl
                 {
                     if (exename.Text.Contains(".exe") is true)
                     {
-                        MessageBox.Show("Do not include .exe in the name");
+                        MessageBox.Show("Do not include .exe in the name", "Exe Input Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                         gate = "nopass";
                     }
 
@@ -2312,17 +2526,15 @@ namespace ydl
 
                 }
             }
+
             if (setpath.IsChecked is true)
             {
                 if (dlpath.Text == "")
                 {
-                    MessageBox.Show("You did not include the path to youtube-dl. If it's in your system path already, please uncheck the 'set path' checkbox");
+                    MessageBox.Show("You have set path checked but you did not set the path. If it's in your system path already, please uncheck the 'set path' checkbox", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
-                else
-                {
-                    dlpathprereq = "cd " + dlpath.Text;
-                }
+
             }
 
             if (gate != "nopass")
@@ -2350,13 +2562,13 @@ namespace ydl
                 outie.RedirectStandardError = true;
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
-                proc.StandardInput.WriteLine(dlpathprereq);
-                proc.StandardInput.WriteLine(name + " --rm-cache ");
+                proc.StandardInput.WriteLine(name + "--rm-cache");
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
 
-               
+                string err;
+                err = "";
 
                 await Task.Run(() =>
                 {
@@ -2379,19 +2591,51 @@ namespace ydl
                         }
                     }
 
+                    if (proc.StandardError.EndOfStream is false)
+                    {
+                        err = proc.StandardError.ReadToEnd();
+                    }
+
+
                 });
 
-                output.AppendText(proc.StandardError.ReadToEnd());
-                output.ScrollToEnd();
-                Queue = 0;
-                processingpopup.Visibility = Visibility.Hidden;
-                abortbutton.Visibility = Visibility.Hidden;
+                if (err == "")
+                {
+                    output.ScrollToEnd();
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
 
-                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "Completed"));
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed with no errors" + "\r\n" + "\r\n"));
+                }
+                else
+                {
+                    if (err.Contains("is not recognized") is true)
+                    {
+                        this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + name + "is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                        MessageBox.Show(name + "was not recongnized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        output.AppendText(err);
+                        output.ScrollToEnd();
+                        Queue = 0;
+                        processingpopup.Visibility = Visibility.Hidden;
+                        abortbutton.Visibility = Visibility.Hidden;
+
+
+                    }
+                }
+
+
             }
             else
             {
-                MessageBox.Show("Something is in queue");
+                MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
 
@@ -2422,7 +2666,7 @@ namespace ydl
         private async void convertbutton_Click(object sender, RoutedEventArgs e)
         {
 
-            dlpathprereq = "";
+            
             gate = "reset";
             fromsequenceforcv = "";
             tosequenceforcv = "";
@@ -2544,7 +2788,7 @@ namespace ydl
 
             if (filechosen.Text == "")
             {
-                MessageBox.Show("You did not choose a file to convert");
+                MessageBox.Show("You did not choose a file to convert", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
 
 
@@ -2552,14 +2796,14 @@ namespace ydl
             {
                 if (formatbox.SelectedItems.Count == 0)
                 {
-                    MessageBox.Show("You did not select a format to convert to", "No Format Chosen");
+                    MessageBox.Show("You did not select a format to convert to", "No Format Chosen", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
             }
 
             if (Downloadlocation.Text == "")
             {
-                MessageBox.Show("You did not choose a download location");
+                MessageBox.Show("You did not choose a download location", "No Download Location Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
             }
 
@@ -2633,7 +2877,7 @@ namespace ydl
             {
                 if (exename.Text == "")
                 {
-                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox");
+                    MessageBox.Show("You did not include the name you changed your youtube-dl exe file to." + "\r\n" + "\r\n" + "If you did not change it and kept it as 'youtube-dl', please uncheck the 'I changed the name' checkbox", "Empty Name Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                    
                 }
@@ -2642,7 +2886,7 @@ namespace ydl
                 {
                     if (exename.Text.Contains(".exe") is true)
                     {
-                        MessageBox.Show("Do not include .exe in the name");
+                        MessageBox.Show("Do not include .exe in the name", "Exe Input Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                         gate = "nopass";
                     }
 
@@ -2660,24 +2904,22 @@ namespace ydl
 
                 }
             }
+
             if (setpath.IsChecked is true)
             {
                 if (dlpath.Text == "")
                 {
-                    MessageBox.Show("You did not include the path to youtube-dl. If it's in your system path already, please uncheck the 'set path' checkbox");
+                    MessageBox.Show("You have set path checked but you did not set the path. If it's in your system path already, please uncheck the 'set path' checkbox", "Empty Path Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 }
-                else
-                {
-                    dlpathprereq = "cd " + dlpath.Text;
-                }
+
             }
 
             if (changeconverttitlecheckbox.IsChecked is true)
             {
                 if (newconvertfiletitle.Text == "")
                 {
-                    MessageBox.Show("You did not write the file's new title. If you would like to keep it the same please uncheck the 'Change Title' checkbox");
+                    MessageBox.Show("You did not write the file's new title. If you would like to keep it the same please uncheck the 'Change Title' checkbox", "Empty Title Field", MessageBoxButton.OK, MessageBoxImage.Information);
                     gate = "nopass";
                 } 
                 else
@@ -2697,7 +2939,7 @@ namespace ydl
                 }
                 else
                 {
-                    MessageBox.Show("Something is in queue");
+                    MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
                 
@@ -2723,13 +2965,14 @@ namespace ydl
                 outie.RedirectStandardError = true;
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
-                proc.StandardInput.WriteLine(dlpathprereq);
                 proc.StandardInput.WriteLine("ffmpeg " + fromsequenceforcv + " -i " + "\"" + filechosen.Text + "\" " + ffmpegpresetspeed + tosequenceforcv + " \"" + Downloadlocation.Text + "\\" + convertfiletitlefinale + "\"" + convertformat);
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
 
                 string line;
+                string err;
+                err = "";
                 await Task.Run(() =>
                 {
                     Queue = 1;
@@ -2740,6 +2983,7 @@ namespace ydl
                         {
                             try
                             {
+                                err = proc.StandardError.ReadLine();
                                 this.Dispatcher.Invoke(() => output.AppendText(proc.StandardError.ReadLine() + "\r\n"));
                                 this.Dispatcher.Invoke(() => output.ScrollToEnd());
 
@@ -2771,20 +3015,33 @@ namespace ydl
 
                    
                 });
-                
-                //output.AppendText(proc.StandardError.ReadToEnd());
-                output.ScrollToEnd();
-                Queue = 0;
-                processingpopup.Visibility = Visibility.Hidden;
-                abortbutton.Visibility = Visibility.Hidden;
 
-                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "Completed"));
+
+                if (err.Contains("operable program") is true)
+                {
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "FFmpeg is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                    output.ScrollToEnd();
+                    MessageBox.Show("Ffmpeg was not recognized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
+
+                } else
+                {
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
+                    output.ScrollToEnd();
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
+                }
+
+               
                 formatbox.SelectedItem = null;
                 filechosen.Text = "";
             }
             else
             {
-                MessageBox.Show("Something is in queue");
+                MessageBox.Show("Something is in queue", "Execution in Progress", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
