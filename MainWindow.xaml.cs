@@ -874,7 +874,7 @@ namespace Skydl
         string tosequenceforportion;
         string formatforportion;
         string fetchedurl;
-        string ffmpegpresetspeed = " -preset veryfast ";
+        string ffmpegpresetspeed = " -preset veryfast -speed 6 ";
 
 
         int Queue = 0;
@@ -1264,6 +1264,8 @@ namespace Skydl
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
                 proc.StandardInput.WriteLine(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatprereq + playlistprereq + downloadloc + link.Text);
+                output.ScrollToEnd();
+
                 link.Text = "";
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
@@ -1295,12 +1297,9 @@ namespace Skydl
 
 
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
-                                if (ex is TaskCanceledException)
-                                {
-                                    proc.Kill();
-                                }
+                                proc.Kill();
                             }
                         }
 
@@ -1374,6 +1373,7 @@ namespace Skydl
                 outie.CreateNoWindow = true;
                 var proc = Process.Start(outie);
                 proc.StandardInput.WriteLine(name + "-f best -g " + link.Text);
+                output.ScrollToEnd();
                 proc.StandardInput.Flush();
                 proc.StandardInput.Close();
 
@@ -1387,6 +1387,7 @@ namespace Skydl
                     Queue = 1;
 
                     this.Dispatcher.Invoke(() => output.AppendText(name + "-f best -g " + link.Text + "\r\n" + "\r\n" + "Processing . . ." + "\r\n" + "\r\n"));
+                    this.Dispatcher.Invoke(() => output.ScrollToEnd());
 
                     while (proc.StandardOutput.EndOfStream is false)
                     {
@@ -1402,12 +1403,9 @@ namespace Skydl
                             }
 
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            if (ex is TaskCanceledException)
-                            {
-                                proc.Kill();
-                            }
+                            proc.Kill();
                         }
                     }
 
@@ -1426,6 +1424,7 @@ namespace Skydl
                     {
                         
                         MessageBox.Show("A url for media extraction from a direct link was unable to be fetched, please try a different link", "Could Not Extract Link", MessageBoxButton.OK, MessageBoxImage.Information);
+                        output.ScrollToEnd();
                     } 
                     
                     else
@@ -1481,6 +1480,7 @@ namespace Skydl
             outie.CreateNoWindow = true;
             var proc = Process.Start(outie);
             proc.StandardInput.WriteLine("ffmpeg " + "-ss " + fromh.Text + ":" + fromm.Text + ":" + froms.Text + " -i " + "\"" + fetchedurl + "\" " + ffmpegpresetspeed + tosequenceforportion + " \"" + Downloadlocation.Text + "\\" + newportiontitle.Text + formatforportion + "\"");
+            output.ScrollToEnd();
             link.Text = "";
             proc.StandardInput.Flush();
             proc.StandardInput.Close();
@@ -1492,6 +1492,7 @@ namespace Skydl
             {
                 Queue = 1;
                 this.Dispatcher.Invoke(() => output.AppendText("ffmpeg " + "-ss " + fromh.Text + ":" + fromm.Text + ":" + froms.Text + " -i " + "\"" + fetchedurl + "\" " + ffmpegpresetspeed + tosequenceforportion + " \"" + Downloadlocation.Text + "\\" + newportiontitle.Text + formatforportion + "\"" + "\r\n" + "\r\n" + "Processing . . ." + "\r\n" + "\r\n"));
+                this.Dispatcher.Invoke(() => output.ScrollToEnd());
                 while (proc.StandardOutput.EndOfStream is false)
                 {
                     while ((line = proc.StandardError.ReadLine()) != null)
@@ -1504,12 +1505,9 @@ namespace Skydl
                             this.Dispatcher.Invoke(() => output.ScrollToEnd());
 
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            if (ex is TaskCanceledException)
-                            {
-                                proc.Kill();
-                            }
+                            proc.Kill();
                         }
                     }
 
@@ -1519,12 +1517,9 @@ namespace Skydl
                         this.Dispatcher.Invoke(() => output.ScrollToEnd());
 
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        if (ex is TaskCanceledException)
-                        {
-                            proc.Kill();
-                        }
+                        proc.Kill();
                     }
                 }
 
@@ -1535,17 +1530,27 @@ namespace Skydl
 
 
 
-
-
-            if (err.Contains("operable program") is true)
+            if (err != null)
             {
-                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "FFmpeg is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                if (err.Contains("operable program") is true)
+                {
+                    this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "FFmpeg is not recognized as an internal or external command, operable program or batch file. Either add its location to your system variables manually or use this program to do so" + "\r\n" + "\r\n"));
+                    output.ScrollToEnd();
+                    MessageBox.Show("Ffmpeg was not recognized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Queue = 0;
+                    processingpopup.Visibility = Visibility.Hidden;
+                    abortbutton.Visibility = Visibility.Hidden;
+                    portioncheck.IsChecked = false;
+                }
+
                 output.ScrollToEnd();
-                MessageBox.Show("Ffmpeg was not recognized by your system. This is because it is not in your system's path variables and you are not using the program from within the same directory as the program. This can also be because you simply do not have it downloaded. If you do have it installed but not in your system path, you can click the 'add path' checkbox to add the program from here if you would like to", "System Does Not Recognize Program", MessageBoxButton.OK, MessageBoxImage.Information);
                 Queue = 0;
                 processingpopup.Visibility = Visibility.Hidden;
                 abortbutton.Visibility = Visibility.Hidden;
+                portioncheck.IsChecked = false;
             }
+
+            
             else
             {
                 this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
@@ -1553,6 +1558,7 @@ namespace Skydl
                 Queue = 0;
                 processingpopup.Visibility = Visibility.Hidden;
                 abortbutton.Visibility = Visibility.Hidden;
+                portioncheck.IsChecked = false;
             }
 
             link.Text = "";
@@ -2180,12 +2186,9 @@ namespace Skydl
                             this.Dispatcher.Invoke(() => output.AppendText(proc.StandardOutput.ReadLine() + "\r\n"));
                             this.Dispatcher.Invoke(() => output.ScrollToEnd());
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            if (ex is TaskCanceledException)
-                            {
-                                proc.Kill();
-                            }
+                            proc.Kill();
                         }
                     }
 
@@ -2334,12 +2337,9 @@ namespace Skydl
                             this.Dispatcher.Invoke(() => output.AppendText(proc.StandardOutput.ReadLine() + "\r\n"));
                             this.Dispatcher.Invoke(() => output.ScrollToEnd());
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            if (ex is TaskCanceledException)
-                            {
-                                proc.Kill();
-                            }
+                            proc.Kill();
                         }
                     }
 
@@ -2455,12 +2455,9 @@ namespace Skydl
                             this.Dispatcher.Invoke(() => output.AppendText(proc.StandardOutput.ReadLine() + "\r\n"));
                             this.Dispatcher.Invoke(() => output.ScrollToEnd());
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            if (ex is TaskCanceledException)
-                            {
-                                proc.Kill();
-                            }
+                            proc.Kill();
                         }
                     }
 
@@ -2599,12 +2596,9 @@ namespace Skydl
                             this.Dispatcher.Invoke(() => output.AppendText(proc.StandardOutput.ReadLine() + "\r\n"));
                             this.Dispatcher.Invoke(() => output.ScrollToEnd());
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            if (ex is TaskCanceledException)
-                            {
-                                proc.Kill();
-                            }
+                            proc.Kill();
                         }
                     }
 
@@ -3005,12 +2999,9 @@ namespace Skydl
                                 this.Dispatcher.Invoke(() => output.ScrollToEnd());
 
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
-                                if (ex is TaskCanceledException)
-                                {
-                                    proc.Kill();
-                                }
+                                proc.Kill();
                             }
                         }
 
@@ -3020,12 +3011,9 @@ namespace Skydl
                             this.Dispatcher.Invoke(() => output.ScrollToEnd());
                            
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            if (ex is TaskCanceledException)
-                            {
-                                proc.Kill();
-                            }
+                            proc.Kill();
                         }
                     }
                     
