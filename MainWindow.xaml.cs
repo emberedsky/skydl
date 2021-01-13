@@ -3076,5 +3076,10 @@ namespace Skydl
             HelpWindow help = new HelpWindow();
             help.Show();
         }
+
+        private void updateskydlbutton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
