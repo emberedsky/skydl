@@ -1,0 +1,311 @@
+﻿<Window x:Class="ydl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ydl"
+        mc:Ignorable="d" FontSize="12"
+        Title="Skydl" Height="830" Width="645"
+        ResizeMode="CanMinimize"
+        Background="PeachPuff" FontFamily="Segoe UI Semilight" Foreground="Black" >
+
+ 
+
+    <Border x:Name="entireborder" >
+        <StackPanel Margin="10 10 10 5" >
+            <Border x:Name="borderforoutlinecolor" BorderBrush="Black" BorderThickness="1">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"  />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="2" HorizontalAlignment="Center" Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+
+
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox x:Name="playlistcheckbox" Grid.Row="0" Grid.Column="0" Margin="0" Content="Playlist" HorizontalAlignment="Center" Height="15" VerticalAlignment="Bottom" Click= "playlistcheckbox_Clicked" Unchecked="playlistcheckbox_Clicked" />
+                        <CheckBox x:Name="execheckbox" Grid.Row="0" Grid.Column="1" Margin="20,0" Content="I changed the name of the youtube dl exe file" HorizontalAlignment="Center" Click="execheckbox_Clicked" Unchecked="execheckbox_Clicked" Height="15" VerticalAlignment="Top" />
+                        <TextBox x:Name="plrange" Grid.Row="2" Grid.Column="0" Height="20" Width="100"  Padding="2" Margin="20 3 20 0" HorizontalAlignment="Center" FontSize="10" Visibility="Hidden" VerticalAlignment="Center" TextAlignment="Center" BorderBrush="Black" />
+                        <CheckBox x:Name="plAll" Content="All" Margin="0 3 15 0" Grid.Row="2" Grid.Column="0" Padding="2" HorizontalAlignment="Right" FontSize="10" Visibility="Hidden" VerticalAlignment="Center" Click="plAll_Click" />
+                        <TextBox x:Name="exename"  Grid.Row="2" Grid.Column="1" Height="20" Width="100" Padding="2" Margin="20 0" HorizontalAlignment="Center" FontSize="10" Visibility="Hidden" VerticalAlignment="Center" TextAlignment="Center" BorderBrush="Black"/>
+                        <TextBlock x:Name="plrangelabel"  Grid.Row="1" Grid.Column="0" Text="Specify range you would like to download" Visibility="Hidden" HorizontalAlignment="Center" />
+                        <TextBlock x:Name="exenamelabel"  Grid.Row="1" Grid.Column="1" Text="What did you name it?" HorizontalAlignment="Center" Visibility="Hidden" />
+
+
+                    </Grid>
+
+
+
+
+
+                    <Grid Grid.Row="3" Margin="5 5 5 5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="121" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="wipecachebutton" Content="Wipe cache" Grid.Row="0" Grid.Column="0" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Background="LightSalmon" Padding="3" Click="wipecachebutton_Click" BorderBrush="Black" />
+                        <Button x:Name="UpdateYoutubedlbutton" Content="Update Youtube DL" Grid.Row="0" Grid.Column="1" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Background="LightSalmon" Padding="3" Click="UpdateYoutubedlbutton_Click" BorderBrush="Black" />
+                        <CheckBox x:Name="setpath" Content="Set ydl/ffmpeg Path" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Click="setpath_Click" Unchecked="setpath_Click" />
+                        <TextBlock x:Name="pathifnotinsystemalrdylabel" Text="(if not in system path already)" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="9" Margin=" 0 15 0 0" />
+
+                        <Rectangle x:Name="pathrectangle" Grid.Row="2" Margin="2 2 10 2" StrokeDashArray="4" StrokeThickness="1" Stroke="Black" Visibility="Hidden" />
+                        <Border x:Name="dlpathborder" Grid.Row="2" Margin="5 5 13 5" Background="LightGray" AllowDrop="True" Drop="dlpathborder_Drop" Visibility="Hidden" >
+                            <TextBlock x:Name="pathdragfolderherelabel" Text="Drag folder here" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"   FontSize="10"  TextAlignment="Center" Visibility="Hidden" />
+                        </Border>
+
+                        <TextBlock x:Name="pathorlabel" Margin="10 0 0 0" Text="or" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Visibility="Hidden" />
+                        <Button x:Name="pathexplorerbutton"  Content="Use File Explorer" Padding="4" Grid.Row="2" Grid.Column="1" Background="#FFE9A2" Foreground="Blue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Visibility="Hidden" Click="SetpathfileButton_Click" />
+                        <TextBlock x:Name="pathlabel" Text="Selected folder path:" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Visibility="Hidden" />
+                        <TextBox x:Name="dlpath" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="175" Height="20"  FontSize="9" TextAlignment="Center" Padding="2" IsReadOnly="True" Visibility="Hidden" BorderBrush="Black"/>
+                        <Button x:Name="copydlpathbutton" Content="Copy path" Background="#FFE9A2" FontSize="9" Margin="0 0 30 0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" Visibility="Hidden" Click="copydlpathbutton_Click" />
+                        <TextBlock x:Name="copiedpopupfordlpath" Text="Copied!" Foreground="Green" FontSize="9" Margin="17 0 30 0" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Visibility="Hidden" />
+
+
+                        <CheckBox x:Name="thumbnail" Content="Embed thumbnail" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin=" 5 0 0 0" />
+                        <CheckBox x:Name="subtitles" Content="Include Subtitles" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin=" 5 0 0 0"   />
+                        <TextBlock Margin="0 10 0 0"  Text="(if available)" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" />
+                        <TextBlock Margin="0 10 0 0"  Text="(Atomic Parsley req.)" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="9" />
+                        <Button x:Name="seeformatsbutton" Background="LightSalmon"  Margin="5 5 5 4" Padding="2" Content="See available formats" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Click="seeformatsbutton_Click" BorderBrush="Black" />
+                        <CheckBox x:Name="prioritizehighestquality" Content="Prioritize Highest Quality" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Click="prioritizehighestquality_Click" Unchecked="prioritizehighestquality_Click" Margin=" 5 5 5 0"  />
+                        <TextBlock x:Name="providetitleforportion"  Text="Provide Title:" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Hidden"  />
+                        <TextBox x:Name="newportiontitle" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="4"   VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"  Margin="5" Visibility="Hidden" BorderBrush="Black" />
+                        <CheckBox x:Name="specifycode" Content="Specify format code" Grid.Row="3" Grid.Column="2"  VerticalAlignment="Center" HorizontalAlignment="Left" Click="specifycode_Click" Unchecked="specifycode_Click" Margin=" 5 5 5 0"  />
+
+                        <CheckBox x:Name="portioncheck" Content="Only download a portion" FontSize="13" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center"  Click="portioncheck_Clicked" Unchecked="portioncheck_Clicked" />
+
+                        <TextBlock x:Name="from" Text="from" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15 15 25 0" FontSize="14" Visibility="Hidden" />
+                        <TextBlock x:Name="numbersonly" Text="Numbers only!" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontStyle="Oblique"  FontSize="12" Foreground="DeepPink" Visibility="Hidden"/>
+                        <TextBlock x:Name="greaterthan60" Text="M/S cannot be &gt; or = to 60" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontStyle="Oblique" Margin="0 0 50 0"  FontSize="10" Foreground="DeepPink" Visibility="Hidden"  />
+                        <TextBlock x:Name="nodashesfornumbers" Text="No dashes" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontStyle="Oblique" Margin="0 0 50 0"  FontSize="10" Foreground="DeepPink" Visibility="Hidden"  />
+                        <TextBlock x:Name="to" Text="to" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15 15 5 0" FontSize="14" Visibility="Hidden" />
+
+                        <StackPanel Orientation="Horizontal" Margin="0 0 3 0" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center">
+
+                            <TextBox TabIndex="20" x:Name="fromh" Margin="0 0 0 0" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clear" PreviewKeyUp="Keyupy" MaxLength="2" BorderBrush="Black" />
+                            <TextBlock x:Name="fromhlabel"  Text="h" Margin="2 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden" />
+                            <TextBox TabIndex="21" x:Name="fromm"  Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearforminutesandseconds" MaxLength="2" PreviewKeyUp="Keyupy" BorderBrush="Black"/>
+                            <TextBlock x:Name="frommlabel"  Text="m" Margin="2 0 3 0" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+                            <TextBox TabIndex="22" x:Name="froms" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearforminutesandseconds" MaxLength="2" PreviewKeyUp="Keyupy"  BorderBrush="Black"/>
+                            <TextBlock x:Name="fromslabel"  Text="s" Margin="2 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center">
+
+                            <TextBox TabIndex="23" x:Name="toh" Text="00" Margin="0 0 0 0" Padding="1" Width="20" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clear" MaxLength="2" PreviewKeyUp="Keyupy" BorderBrush="Black" />
+                            <TextBlock x:Name="tohlabel" Text="h" Margin="2 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+                            <TextBox TabIndex="24" x:Name="tom"  Text="00" Padding="1" Width="20" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearforminutesandseconds" MaxLength="2" PreviewKeyUp="Keyupy"  BorderBrush="Black"/>
+                            <TextBlock x:Name="tomlabel"  Text="m" Margin="2 0 3 0" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden" />
+                            <TextBox TabIndex="25" x:Name="tos"  Text="00" Padding="1" Width="20" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearforminutesandseconds" MaxLength="2" PreviewKeyUp="Keyupy" BorderBrush="Black"/>
+                            <TextBlock x:Name="toslabel"  Text="s" Margin="2 0 5 0" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+
+                        </StackPanel>
+
+                        <CheckBox x:Name="ToEnd" Content="To End" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Right" Visibility="Hidden" Click="ToEnd_Click" />
+                        <ComboBox x:Name="portionformatselection" Margin="0 3 3 3" Padding="2" Width="45"  Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left"  Visibility="Hidden" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10" Background="#FFE9A2" >
+                            <ComboBoxItem Content="mp4"/>
+                            <ComboBoxItem Content="mp3"/>
+                            <ComboBoxItem Content="m4a (audio)"/>
+                            <ComboBoxItem Content="webm"/>
+                            <ComboBoxItem Content="avi"/>
+                            <ComboBoxItem Content="mpeg"/>
+                            <ComboBoxItem Content="mka"/>
+                            <ComboBoxItem Content="mks"/>
+                            <ComboBoxItem Content="mkv"/>
+                            <ComboBoxItem Content="flv"/>
+                            <ComboBoxItem Content="h264"/>
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FFE9A2" />
+
+
+                            </ComboBox.Resources>
+                        </ComboBox>
+                        <TextBlock x:Name="portionformatselectionlabel"  Text="Choose a format:" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Hidden"  />
+                        <TextBlock x:Name="numbersonlyforcode" Text="Numbers only!" Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Oblique" Grid.ColumnSpan="2"  FontSize="10" Foreground="DeepPink" Visibility="Hidden"  />
+                        <TextBlock x:Name="nodashesforcode" Text="Do not include dashes" Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Oblique" Grid.ColumnSpan="2" Margin="30 0 0 0" FontSize="10" Foreground="DeepPink" Visibility="Hidden"  />
+                        <TextBlock x:Name="threedigits" Text="3 Digits Only" Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Oblique" Grid.ColumnSpan="2" Margin="0 0 0 0" FontSize="10" Foreground="DeepPink" Visibility="Hidden"  />
+                        <TextBox x:Name="formatcode" Text="000" MaxLength="3" Width="26" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3" Padding="1" Visibility="Hidden" IsKeyboardFocusedChanged="Clearforcode" PreviewKeyUp="Keyupyforcode" TextAlignment="Center" BorderBrush="Black"/>
+
+
+                    </Grid>
+
+
+
+
+                    <Grid Grid.Row="4" Margin="5 5 5 5" >
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="Auto" />
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="Download" Background="LightSalmon" Content="Download" Grid.Column="2" Margin="10 0 10 10" VerticalAlignment="Top" FontSize="12" Padding="5" Click="Download_Click" BorderBrush="Black" />
+                        <TextBlock Text="or" Grid.Column="2" VerticalAlignment="Top" Margin="4 5 33 0"  Grid.ColumnSpan="2" FontSize="14"  HorizontalAlignment="Center" />
+                        <Button x:Name="copycommandbutton" Background="#FFE9A2"  Content="Copy command" Margin="10 0 10 10" Grid.Column="3" VerticalAlignment="Top" FontSize="12" Padding="5" HorizontalAlignment="Right" Click="copycommandbutton_Click" />
+                        <TextBlock x:Name="copiedpopupcopycommand" Text="Copied!" Foreground="Green" FontSize="10" Margin="0 8 0 0" Grid.Column="3"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="2" Visibility="Hidden" />
+                        <TextBlock x:Name="copiedpopupfordownloadpath" Text="Copied!" Foreground="Green" FontSize="10" Margin="90 0 0 1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="2" Visibility="Hidden" />
+                        <Button x:Name="DownloadLocationButton" Background="#FFE9A2" Foreground="Blue" Content="Choose Download Location" Grid.Column="0" Margin="10 0 10 10" FontSize="12" Padding="5" VerticalAlignment="Top" Click="DownloadLocationButton_Click"/>
+                        <TextBox x:Name="Downloadlocation" FontSize="12" TextAlignment="Center" Height="25" Width="220" Padding="2" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 2 10 0" BorderBrush="Black"/>
+                        <Button x:Name="downloadlocationpathcopybutton" Grid.Column="1" Margin="0 10 0 0" Background="#FFE9A2" Content="Copy path" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="3" Click="downloadlocationpathcopybutton_Click"  />
+
+
+                    </Grid>
+
+                    <CheckBox x:Name="darkmode" Grid.Row="0" Content="Dark Mode" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Right" Click="darkmode_Click" />
+
+
+                    <TextBlock Grid.Row="0" Text="Link(s)" HorizontalAlignment="Center" Margin="0 5 0 0" FontSize="18"/>
+                    <Button x:Name="pasteclipboardbutton" Background="Orange" Grid.Row="0" Content="Paste Clipboard" Padding="2" Margin="5 5 0 0" HorizontalAlignment="Left" Click="pasteclipboardbutton_Click"  />
+                    <Button x:Name="appendclipboardbutton" Grid.Row="0" Background="Orange" Content="Append Clipboard" Padding="2" Margin="105 5 0 0" HorizontalAlignment="Left" Click="appendclipboardbutton_Click"  />
+                    <TextBlock x:Name="pastedpopup" Grid.Row="0" Text="Pasted!" Foreground="Green" VerticalAlignment="Center" Margin="220 5 0 0" Visibility="Hidden" />
+                    <TextBlock x:Name="addedpopup" Grid.Row="0" Text="Added!" Foreground="Green" VerticalAlignment="Center" Margin="220 5 0 0" Visibility="Hidden" />
+
+                    <TextBox  Grid.Row="1" x:Name="link" FontSize="12" Height="30" Width="500" Padding="5" Margin="0 3 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Black" />
+                    <Button Content="Clear" Background="Orange" Grid.Row="1" x:Name="clearlinks" Padding="2" Margin="10 3 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" Click="clearlinks_Click" />
+
+
+                    <TextBlock Text="Convert or Trim a File" TextDecorations="underline"  Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Centaur" FontSize="16"  />
+
+
+                    <TextBlock  Grid.Row="5" Text="or" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 20 40 0" />
+                    <Button  Grid.Row="5" Content="Use File Explorer" Margin="0 20 195 0" Padding="5" VerticalAlignment="Center" Background="#FFE9A2" Foreground="Blue" HorizontalAlignment="Right" Click="ConvertexplorerButton_Click"/>
+                    <Rectangle Margin="50 20 0 0" x:Name="convertarea" Stroke="Black" StrokeThickness="1" StrokeDashArray="15" Grid.Row="5" Width="200" Height="140" VerticalAlignment="Center"  HorizontalAlignment="Left" AllowDrop="True" Drop="convertarea_Drop" ></Rectangle>
+                    <Border x:Name="convertareaborder" Grid.Row="5" Margin="52 20 0 0" Width="195" Height="135"  HorizontalAlignment="Left" Drop="convertarea_Drop" Background="LightGray" AllowDrop="True" >
+                        <TextBlock Text="Drag a file here to convert or trim"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+
+
+                    <TextBlock x:Name="formatboxlabel" Grid.Row="5" Grid.Column="1" Margin="155 5 5 5" Text="Choose Format:" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Hidden"  />
+                    <TextBlock x:Name="newtitlelabel" Grid.Row="5" Grid.Column="1" Margin="0 60 45 5" Text="New Title" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Hidden"  />
+                    <CheckBox x:Name="changeconverttitlecheckbox" Content="Change Title" Grid.Row="5" Grid.Column="1" Margin="0 30 15 15"  VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="Hidden" Click="changeconverttitlecheckbox_Click" Unchecked="changeconverttitlecheckbox_Click" />
+                    <CheckBox x:Name="trimconvercheckbox" Content="Trim" Grid.Row="5" Grid.Column="1" Margin="0 0 40 70"  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden" Click="trimconvercheckbox_Click" Unchecked="trimconvercheckbox_Click" />
+
+                    <TextBlock x:Name="fromcv" Text="from" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30 22 0 0" Visibility="Hidden" />
+                    <TextBox TabIndex="50" x:Name="fromhcv" Grid.Row="5" Grid.Column="1" Margin="80 0 0 100" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearcv" PreviewKeyUp="Keyupy" MaxLength="2" BorderBrush="Black"/>
+                    <TextBlock x:Name="fromhlabelcv"  Text="h" Grid.Row="5" Grid.Column="1" Margin="120 0 8 100" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden" />
+                    <TextBox TabIndex="51" x:Name="frommcv" Grid.Row="5" Grid.Column="1" Margin="150 0 0 100" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearcvforms" MaxLength="2" PreviewKeyUp="Keyupy" BorderBrush="Black"/>
+                    <TextBlock x:Name="frommlabelcv"  Text="m" Grid.Row="5" Grid.Column="1" Margin="200 0 16 100" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+                    <TextBox TabIndex="52" x:Name="fromscv" Grid.Row="5" Grid.Column="1" Margin="220 0 0 100" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearcvforms" MaxLength="2" PreviewKeyUp="Keyupy"  BorderBrush="Black"/>
+                    <TextBlock x:Name="fromslabelcv"  Text="s" Grid.Row="5" Grid.Column="1" Margin="280 0 30 100" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+
+                    <TextBlock x:Name="tocv" Text="to" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30 0 0 50" Visibility="Hidden" />
+                    <TextBox TabIndex="53" x:Name="tohcv" Grid.Row="5" Grid.Column="1" Margin="80 0 0 50" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearcv" PreviewKeyUp="Keyupy" MaxLength="2" BorderBrush="Black" />
+                    <TextBlock x:Name="tohlabelcv"  Text="h" Grid.Row="5" Grid.Column="1" Margin="120 0 8 50" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden" />
+                    <TextBox TabIndex="54" x:Name="tomcv" Grid.Row="5" Grid.Column="1" Margin="150 0 0 50" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearcvforms" MaxLength="2" PreviewKeyUp="Keyupy" BorderBrush="Black"/>
+                    <TextBlock x:Name="tomlabelcv"  Text="m" Grid.Row="5" Grid.Column="1" Margin="200 0 16 50" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+                    <TextBox TabIndex="55" x:Name="toscv" Grid.Row="5" Grid.Column="1" Margin="220 0 0 50" Text="00" Width="20" Padding="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" IsKeyboardFocusedChanged="Clearcvforms" MaxLength="2" PreviewKeyUp="Keyupy"  BorderBrush="Black"/>
+                    <TextBlock x:Name="toslabelcv"  Text="s" Grid.Row="5" Grid.Column="1" Margin="280 0 30 50" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Visibility="Hidden"  />
+
+                    <TextBlock x:Name="numbersonlycv" Text="Numbers only!" Margin="0 10 80 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Oblique" Foreground="DeepPink" Visibility="Hidden"/>
+                    <TextBlock x:Name="greaterthan60cv" Text="M/S cannot be &gt; or = to 60" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Oblique" Margin="0 10 60 0"  FontSize="10" Foreground="DeepPink" Visibility="Hidden"  />
+                    <TextBlock x:Name="nodashescv" Text="No dashes" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Oblique" Margin="0 10 100 0"  FontSize="10" Foreground="DeepPink" Visibility="Hidden"  />
+                    <CheckBox x:Name="toendcvcheckbox" Content="To End" Grid.Row="5" Grid.Column="1" Margin="0 0 130 10"  VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="Hidden" Click="toendcvcheckbox_Click" Unchecked="toendcvcheckbox_Click" />
+                    <TextBox x:Name="newconvertfiletitle" Grid.Row="5" Grid.Column="1" Margin="475 30 0 95"  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden" Width="100" Height="20" TextAlignment="Center" BorderBrush="Black" />
+
+                    <ListBox x:Name="formatbox" Grid.Row="5"  Grid.Column="1" Grid.RowSpan="2" Width="100" Height="95" Margin="340 0 0 0" FontSize="12" VerticalAlignment="Bottom" Visibility="Hidden" SelectionMode="Single" Background="#FFE9A2" >
+
+
+                        <ListBoxItem x:Name="mp4" Padding="2"  HorizontalAlignment="Center" VerticalAlignment="Center">mp4</ListBoxItem>
+                        <ListBoxItem x:Name="m4a" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">m4a (audio)</ListBoxItem>
+                        <ListBoxItem x:Name="mp3" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mp3</ListBoxItem>
+                        <ListBoxItem x:Name="avi" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">avi</ListBoxItem>
+                        <ListBoxItem x:Name="mkv" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mkv</ListBoxItem>
+                        <ListBoxItem x:Name="webm" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">webm</ListBoxItem>
+                        <ListBoxItem x:Name="aac" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">aac</ListBoxItem>
+                        <ListBoxItem x:Name="mov" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mov</ListBoxItem>
+                        <ListBoxItem x:Name="mpeg" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mpeg</ListBoxItem>
+                        <ListBoxItem x:Name="srt" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">srt (subtitles)</ListBoxItem>
+                        <ListBoxItem x:Name="mka" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mka</ListBoxItem>
+                        <ListBoxItem x:Name="mks" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mks</ListBoxItem>
+                        <ListBoxItem x:Name="flv" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">flv</ListBoxItem>
+                        <ListBoxItem x:Name="h264" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">h264</ListBoxItem>
+                        <ListBoxItem x:Name="bit" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">bit</ListBoxItem>
+
+
+
+                    </ListBox>
+
+                    <Grid Grid.Row="6">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="5 5 5 5" Text="File Chosen:" VerticalAlignment="Center" HorizontalAlignment="Right"   />
+
+
+                        <TextBox  Grid.Column="1" Margin="5" Padding="3" x:Name="filechosen" Width="250" Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" IsReadOnly="True" TextChanged="filechosen_TextChanged" BorderBrush="Black"/>
+                        <Button x:Name="convertpathcopybutton" Grid.Column="2" Background="#FFE9A2" Margin="5" Content="Copy path" FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="3" Click="convertpathcopybutton_Click"  />
+                        <TextBlock x:Name="copiedpopupforconvertpath" Text="Copied!" Foreground="Green" FontSize="9" VerticalAlignment="Center" Grid.Column="2" Margin=" 58 0 0 0" Visibility="Hidden" />
+
+
+                        <Button Grid.Column="2" Margin="200 5 5 5" x:Name="converbutton" Content="Execute" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightSalmon" Padding="4" Click="convertbutton_Click" BorderBrush="Black" />
+
+
+                    </Grid>
+
+
+
+
+
+                    <TextBox x:Name="output" Grid.Row="7" Margin="10 10 10 0" Padding="3" Height="180"   IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" BorderBrush="Black" FontFamily="Lucida Console"/>
+                    <TextBlock x:Name="processingpopup" Text="Processing . . .        " Grid.Row="8"  Padding="3" TextAlignment="Right" Visibility="Hidden" VerticalAlignment="Center" />
+                    <Button x:Name="abortbutton" Content="Abandon Ship" Grid.Row="8"  Padding="3" Foreground="Red" HorizontalAlignment="Right" Visibility="Hidden"  Margin="0 5 130 5" VerticalAlignment="Bottom" Click="abortbutton_Click" />
+                    <Button x:Name="helpbutton" Content="Help" Grid.Row="8"  Padding="3" Foreground="White" Background="Blue" HorizontalAlignment="Left" Visibility="Visible" Margin="20 0 0 0 "  VerticalAlignment="Center" Click="helpbutton_Click" BorderBrush="Black" />
+                    <Button x:Name="resetbutton" Content="Reset Everything" Margin="115 5 5 5" Grid.Row="8"  HorizontalAlignment="Left" Padding="3" Foreground="Red" Background="FloralWhite" Click="resetbutton_Click" BorderBrush="Black"/>
+                    <Button x:Name="clearoutputbutton" Content="Clear Output" Grid.Row="8"  Padding="3" Foreground="Blue" HorizontalAlignment="Center" Visibility="Visible" Margin="20 0 0 0 "  VerticalAlignment="Center" Click="clearoutputbutton_Click" BorderBrush="Black" Background="FloralWhite"/>
+
+
+                </Grid>
+
+            </Border>
+        
+            
+
+    </StackPanel>
+    </Border>
+</Window>

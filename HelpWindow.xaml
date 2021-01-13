@@ -1,0 +1,77 @@
+﻿<Window x:Class="ydl.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ydl"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        FontFamily="Segoe UI Semilight"
+        Background="Cornsilk"
+       
+        Title="Help" Height="720" Width="650" FontSize="10">
+
+    <Border BorderThickness="1" BorderBrush="Black" Margin="5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock TextDecorations="Underline" FontFamily="Script MT Bold" FontSize="16" Text="Questions" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" />
+            <TextBlock TextDecorations="Underline" FontFamily="Script MT Bold" FontSize="16" Text="Answers" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" />
+
+            <TextBlock Text="How do I download something?" Grid.Column="0" Grid.Row="1" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12"  />
+            <TextBlock Text="With the link copied, paste it into the Link entry, choose your download location, and press Download!" Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="Can I download multiple links?" Grid.Column="0" Grid.Row="2" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="Yes! You can use the append clipboard button to keep adding links. Once you have all the links you want added, choose your download location and press Download" Grid.Column="1" Grid.Row="2" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="How does downloading only a portion work?" Grid.Column="0" Grid.Row="3" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="This is a two-command process. First I use youtube-dl to fetch a url from the link you provide. Then, with the fetched url, I use ffmpeg to process the rest. This is why this is only possible with one link at a time" Grid.Column="1" Grid.Row="3" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="When I look at the output I see it's processing to a different 'out' time from what I specified, what gives?" Grid.Column="0" Grid.Row="4" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="How ffmpeg works makes it so the time you specify is relative to the start point that you specify, and that becomes the new 0:00. So if you want to download from 2:20 to 3:25 for instance, we would start at 2:20 but we would process 1:25 ahead, since thats what the difference between the two times is. At the end, you will end up with the portion that you wanted and specified from the file" Grid.Column="1" Grid.Row="4" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="How do I convert a file I already have downloaded?" Grid.Column="0" Grid.Row="5" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="First input the file by either dragging or using the file explorer button. Then choose the desired format, the download location, and press Execute" Grid.Column="1" Grid.Row="5" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="How do I trim a file?" Grid.Column="0" Grid.Row="6" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"  FontSize="12" />
+            <TextBlock Text="Input a file in the same way you would for converting, and make sure to specify you would like to trim it by checking the trim box. Specify the from and to times, then choose the desired format as well as the Download Location, and press Execute" Grid.Column="1" Grid.Row="6" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="What is the benefit of adding the youtube-dl path to the system variables?" Grid.Column="0" Grid.Row="7" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="Doing this makes it so that anytime we want to use youtube-dl, we no longer have to first enter its directory (where it's located) to call upon it. It allows for youtube-dl to be usable and callable even if you are not in its location's directory, as soon as we open up cmd, for instance" Grid.Column="1" Grid.Row="7" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="How do I add youtube-dl to my system path?" Grid.Column="0" Grid.Row="8" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="The first step is identifying where youtube-dl is located. Let's say for example's sake we placed it in the folder located here: C:\ProgramFiles\youtube-dl , we would then go to Control Panel > System > Advanced System Settings > Environment Variables.  Find the User variable named Path, press on it and click Edit to add a New path. If it is not there you can create one. We will add the youtube-dl folder's path here. That's it, you're done! " Grid.Column="1" Grid.Row="8" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="What does changing the name of the youtube-dl exe file do exactly?" Grid.Column="0" Grid.Row="9" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="This is for a simple reason. When you call youtube-dl, you have to write its name first. The shorter the name, the less you have to write to call youtube-dl anytime you use it" Grid.Column="1" Grid.Row="9" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="What is the point of the option to set the youtube-dl path here as opposed to doing it myself on my system?" Grid.Column="0" Grid.Row="10" Margin="5" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+            <TextBlock Text="This is just a simple convenience for anyone who may need it" Grid.Column="1" Grid.Row="10" Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+
+            <Button x:Name="Cancel" Content="Okay, thanks!" FontSize="16" FontFamily="Script MT Bold" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="80" Padding="3" Margin="5" Background="BlanchedAlmond" Click="Cancel_Click" BorderBrush="Black" VerticalAlignment="Bottom" />
+
+        </Grid>
+    </Border>
+   
+</Window>
