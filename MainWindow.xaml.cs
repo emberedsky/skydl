@@ -25,9 +25,9 @@ namespace Skydl
 
     public partial class MainWindow : Window
     {
-        string currentversion;
+        
         string versionlabeltext = "v1.0";
-        string latestversion = "1.0.0.0";
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -3097,19 +3097,9 @@ namespace Skydl
         
         private void updateskydlbutton_Click(object sender, RoutedEventArgs e)
         {
-            
-            currentversion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //currentversion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            if (currentversion == latestversion)
-            {
-                MessageBox.Show("You have the latest version installed: " + currentversionlabel.Text, "No Later Version Found", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            
-            else
-            {
-                System.Diagnostics.Process.Start("https://github.com/emberedsky/skydl/releases");
-            }
-           
+            Process.Start("https://github.com/emberedsky/skydl/releases");
         }
     }
 }
