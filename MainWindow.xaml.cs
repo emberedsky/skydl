@@ -485,6 +485,18 @@ namespace Skydl
 
             }
 
+            if (specifycode.IsChecked is true && prioritizehighestquality.IsChecked is true)
+            {
+                MessageBox.Show("You cannot priotize highest quality while specifying a format. Either uncheck the 'specify format' checkbox or keep prioritize highest quality unchecked", "Format Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
+                specifycode.IsChecked = false;
+            }
+
+            if (specifycode.IsChecked is true && portioncheck.IsChecked is true)
+            {
+                MessageBox.Show("You can't specify a code while downloading a portion of a video", "Format Overlap", MessageBoxButton.OK, MessageBoxImage.Information);
+                specifycode.IsChecked = false;
+            }
+
         }
 
         private void Clear(object sender, DependencyPropertyChangedEventArgs e)
@@ -883,6 +895,8 @@ namespace Skydl
         private async void Download_Click(object sender, RoutedEventArgs e)
 
         {
+            Download.Focus();
+
             playlistprereq = "";
             thumbnailprereq = "";
             subtitlesprereq = "";
@@ -906,13 +920,7 @@ namespace Skydl
                 }
                 else
                 {
-                    if (fromh.Text.Contains("00") && fromm.Text.Contains("00") && froms.Text.Contains("00"))
-                    {
-                        MessageBox.Show("You did not include a 'from' time signature." + "\r\n" + "\r\n" + "If you intend to download the video in its entirety please uncheck the portion checkbox");
-                        gate = "nopass";
-                    }
-                    else
-                    {
+                   
                         if (toh.Text.Contains("00") && tom.Text.Contains("00") && tos.Text.Contains("00") && ToEnd.IsChecked is false)
                         {
                             MessageBox.Show("You did not include a 'to' time signature." + "\r\n" + "\r\n" + "If you intend to download the video to the end please check the 'To End' checkbox");
@@ -1042,7 +1050,7 @@ namespace Skydl
                             }
 
                         }
-                    }
+                    
                 }
             }
 
