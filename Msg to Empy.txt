@@ -1,0 +1,46 @@
+u/Empyrealist
+Reaching out about youtube-dl :)
+
+
+Hello Empyrealist! I wanted to take you up on your offer of reaching out that you made in this comment on my post https://www.reddit.com/r/youtubedl/comments/kj1llz/i_made_a_program_in_excel_that_automates/gh37tac
+
+I went ahead and made yet another program, but this time I made it as a desktop windows app, as opposed to inside something like excel. I also jam packed a lot of features into it as well, such as:
+
+1) Trim a file with a selected time gap
+2) Convert a file to a specified format
+3) Download any supported link to a specified location
+4) Download only a specified portion of a supported link (which I am most proud of) as in from x time to z time
+5) Add youtube-dl's path your system's path (or any other chosen directory for that matter)
+6) Embed Thumbnails 
+7) Include Subtitles
+8) Exe name change taken into account
+9) Download and specify a range for a playlist
+10) Update youtube-dl
+11) Wipe youtube-dl's cache
+12) See a list of available formats for a given link
+13) Download multiple links in the same queue
+14) Copy command to clipboard instead of executing
+15) Prioritize highest quality
+*every download goes into a specified location
+
+And the cherry on top: I've simulated the console output into a text window so you will have the terminal information from within the app!
+
+Here is an album of it in action for some reference, as well as the github link:
+
+
+
+So I wanted to reach out and explain some of the format decisions I've made to make sure you see no issues with what I'm doing. There are things I want to bring up for both ffmpeg & youtube-dl.
+
+Youtube-dl: 
+
+-The 'Prioritize highest quality' checkbox is actually a little deceiving, since it's a subtraction not an addition of parameters, to make sure no input for quality is made, to fall back on youtube-dl's default, which should be the highest quality possible, as you taught me! If it is unchecked it goes back to -f best, unless specify format code is checked (or download a portion is also checked). Do you think this is okay??
+
+- For my entire logic behind downloading a portion this was a little tricky since it is a two command process. First I need to fetch the link's url using youtube-dl and its --get-url command, or -g. I realized if I leave youtube-dl's default quality, it returns back two streams, one which is the best video stream possible, and one which is the best audio stream possible, separated by a line break. This made things complicated, so I tried looking for solutions. I realized if i input -f best it returns one stream with both video and audio, and that makes it so all I would need to do is throw that one link into ffmpeg's input, which is the second command of the process. Do you think that's a permissible sacrifice??
+
+Ffmpeg:
+
+I learned about the preset speed parameters for .h264 encoding (-preset) https://trac.ffmpeg.org/wiki/Encode/H.264 & for VP9 encoding (-speed) https://trac.ffmpeg.org/wiki/Encode/VP9 so I instead of giving the choice to the user, I chose a speed relatively fast speed compared to the the default speed, veryfast for h264 and 6 for vp9 (out of 9). I figured it would be way more cluttered than it already is if I also give them options to input a speed selection so I just input it myself as opposed to keeping it to default. The default speed seemed to slow so that's why I changed it, do you think I'm losing too much quality to make this justified simply because of lack of patience? I don't want to cut too many corners here. 
+
+Sorry for the wall of text, but I am passionate about this and would LOVE any feedback!! Thank you in advance!
+
+

@@ -1221,13 +1221,19 @@ namespace Skydl
                 }
 
             }
+
+            
           
             
 
-            if (specifycode.IsChecked is true)
+            if (specifycode.IsChecked is true && formatcode.Text == "000")
+            {
+                MessageBox.Show("You did not specify the format code. If you do not want to specify it, please uncheck the 'specify format' box", "No Format Code Detected", MessageBoxButton.OK, MessageBoxImage.Information);
+                gate = "nopass";
+                
+            } else
             {
                 formatprereq = " -f " + formatcode.Text;
-                
             }
 
             if (link.Text.Contains("&t=") is true)
@@ -1329,6 +1335,7 @@ namespace Skydl
                         abortbutton.Visibility = Visibility.Hidden;
 
                         this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
+                        link.Text = "";
                     }
                     else
                     {
@@ -1359,6 +1366,7 @@ namespace Skydl
                     Queue = 0;
                     processingpopup.Visibility = Visibility.Hidden;
                     abortbutton.Visibility = Visibility.Hidden;
+                    link.Text = "";
                 }
 
 
@@ -1509,7 +1517,6 @@ namespace Skydl
             var proc = Process.Start(outie);
             proc.StandardInput.WriteLine("ffmpeg " + "-ss " + fromh.Text + ":" + fromm.Text + ":" + froms.Text + " -i " + "\"" + fetchedurl + "\" " + ffmpegpresetspeed + tosequenceforportion + " \"" + Downloadlocation.Text + "\\" + newportiontitle.Text + formatforportion + "\"");
             output.ScrollToEnd();
-            link.Text = "";
             proc.StandardInput.Flush();
             proc.StandardInput.Close();
 
@@ -1571,6 +1578,7 @@ namespace Skydl
                     portioncheck.IsChecked = false;
                 }
 
+                this.Dispatcher.Invoke(() => output.AppendText("\r\n" + "\r\n" + "Completed" + "\r\n" + "\r\n"));
                 output.ScrollToEnd();
                 Queue = 0;
                 processingpopup.Visibility = Visibility.Hidden;
@@ -3057,6 +3065,7 @@ namespace Skydl
                 {
                     Queue = 1;
                     this.Dispatcher.Invoke(() => output.AppendText("ffmpeg " + fromsequenceforcv + " -i " + "\"" + filechosen.Text + "\" " + ffmpegpresetspeed + tosequenceforcv + " \"" + Downloadlocation.Text + "\\" + convertfiletitlefinale + "\"" + convertformat + "\r\n" + "\r\n" + "Processing . . ." + "\r\n" + "\r\n"));
+                    this.Dispatcher.Invoke(() => output.ScrollToEnd());
                     while (proc.StandardOutput.EndOfStream is false)
                     {
                         while ((line = proc.StandardError.ReadLine()) != null)
