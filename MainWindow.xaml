@@ -144,7 +144,7 @@
                         <ComboBox x:Name="portionformatselection" Margin="0 3 3 3" Padding="2" Width="45"  Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left"  Visibility="Hidden" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10" Background="#FFE9A2" >
                             <ComboBoxItem Content="mp4"/>
                             <ComboBoxItem Content="mp3"/>
-                            <ComboBoxItem Content="m4a (audio)"/>
+                            <ComboBoxItem Content="m4a"/>
                             <ComboBoxItem Content="webm"/>
                             <ComboBoxItem Content="avi"/>
                             <ComboBoxItem Content="mpeg"/>
@@ -254,7 +254,7 @@
 
 
                         <ListBoxItem x:Name="mp4" Padding="2"  HorizontalAlignment="Center" VerticalAlignment="Center">mp4</ListBoxItem>
-                        <ListBoxItem x:Name="m4a" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">m4a (audio)</ListBoxItem>
+                        <ListBoxItem x:Name="m4a" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">m4a</ListBoxItem>
                         <ListBoxItem x:Name="mp3" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mp3</ListBoxItem>
                         <ListBoxItem x:Name="avi" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">avi</ListBoxItem>
                         <ListBoxItem x:Name="mkv" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">mkv</ListBoxItem>
