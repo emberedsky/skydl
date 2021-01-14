@@ -300,7 +300,7 @@
                     <Button x:Name="abortbutton" Content="Abandon Ship" Grid.Row="8"  Padding="3" Foreground="Red" HorizontalAlignment="Right" Visibility="Hidden"  Margin="0 5 130 5" VerticalAlignment="Bottom" Click="abortbutton_Click" />
                     <Button x:Name="helpbutton" Content="Help" Grid.Row="8"  Padding="3" Foreground="White" Background="Blue" HorizontalAlignment="Left" Visibility="Visible" Margin="20 0 0 0 "  VerticalAlignment="Center" Click="helpbutton_Click" BorderBrush="Black" />
                     <Button x:Name="resetbutton" Content="Reset Everything" Margin="65 5 5 5" Grid.Row="8"  HorizontalAlignment="Left" Padding="3" Foreground="Red" Background="FloralWhite" Click="resetbutton_Click" BorderBrush="Black" FontSize="13"/>
-                    <Button x:Name="updateskydlbutton" Content="Check for Updates" Margin="182 5 5 5" Grid.Row="8"  HorizontalAlignment="Left" Padding="3" Foreground="Black" Background="FloralWhite" Click="updateskydlbutton_Click" BorderBrush="Black" FontSize="10"/>
+                    <Button x:Name="updateskydlbutton" Content="Check for Updates" Margin="181 5 5 5" Grid.Row="8"  HorizontalAlignment="Left" Padding="3" Foreground="Black" Background="FloralWhite" Click="updateskydlbutton_Click" BorderBrush="Black" FontSize="10"/>
                     <Button x:Name="clearoutputbutton" Content="Clear Output" Grid.Row="8"  Padding="3" Foreground="Blue" HorizontalAlignment="Center" Visibility="Visible" Margin="20 0 0 0 "  VerticalAlignment="Center" Click="clearoutputbutton_Click" BorderBrush="Black" Background="FloralWhite"/>
 
 
