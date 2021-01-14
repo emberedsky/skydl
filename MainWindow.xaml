@@ -294,9 +294,6 @@
 
                     </Grid>
 
-
-
-
                     <TextBlock Text="output" Grid.Row="7" Margin="10 0 0 0" Foreground="Gray"/>
                     <TextBox x:Name="output" Grid.Row="7" Margin="10 20 10 0" Padding="3" Height="140"   IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" BorderBrush="Black" FontFamily="Lucida Console" FontSize="10"/>
                     <TextBlock x:Name="processingpopup" Text="Processing . . .        " Grid.Row="8"  Padding="3" TextAlignment="Right" Visibility="Hidden" VerticalAlignment="Center" />
