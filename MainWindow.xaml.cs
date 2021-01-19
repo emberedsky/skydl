@@ -1222,9 +1222,18 @@ namespace Skydl
                 gate = "nopass";
                 
             } else
+            if (specifycode.IsChecked is true)
             {
-                formatprereq = " -f " + formatcode.Text;
+                if (formatcode.Text == "000")
+                {
+                    MessageBox.Show("You did not specify the format code. If you do not want to specify it, please uncheck the 'specify format' box", "No Format Code Detected", MessageBoxButton.OK, MessageBoxImage.Information);
+                    gate = "nopass";
+                } else
+                {
+                    formatprereq = " -f " + formatcode.Text;
+                }
             }
+            
 
             if (link.Text.Contains("&t=") is true)
             {
