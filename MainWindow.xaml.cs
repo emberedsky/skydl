@@ -1122,7 +1122,7 @@ namespace Skydl
                 }
             }
 
-            if (link.Text.Length == 0 || link.Text.Contains(" ") is true)
+            if (link.Text.Length == 0)
             {
                 MessageBox.Show("You have not pasted any valid links", "Empty Link(s) Field", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";

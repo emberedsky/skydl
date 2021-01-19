@@ -27,6 +27,12 @@ And the cherry on top: I've simulated the console output into a text window so y
 
 Here is an album of it in action for some reference, as well as the github link:
 
+https://imgur.com/a/U24lOV3
+
+https://github.com/emberedsky/skydl
+
+& where you would download it from: https://github.com/emberedsky/skydl/releases
+
 
 
 So I wanted to reach out and explain some of the format decisions I've made to make sure you see no issues with what I'm doing. There are things I want to bring up for both ffmpeg & youtube-dl.
