@@ -50,12 +50,7 @@ namespace Skydl
 
             }
             else
-                if (Clipboard.GetText().Contains(" ") is true)
-            {
-                MessageBox.Show("There are spaces in your clipboard, there should not be any spaces", "Empty Characters Detected", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
+            
                 if (link.Text != "")
                 {
                     MessageBoxResult cnfrm = MessageBox.Show("This will overwrite your link(s), are you okay with that?", "Overwrite Confirmation", MessageBoxButton.YesNo,MessageBoxImage.Warning);
@@ -80,7 +75,7 @@ namespace Skydl
                 }
 
 
-            }
+            
         }
 
         private void appendclipboardbutton_Click(object sender, RoutedEventArgs e)
@@ -92,12 +87,7 @@ namespace Skydl
             }
             else
             {
-                if (Clipboard.GetText().Contains(" ") is true)
-                {
-                    MessageBox.Show("There are spaces in your clipboard, there should not be any spaces", "Empty Characters Detected", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
+               
                     if (link.Text.Contains(Clipboard.GetText()) is true)
                     {
                         MessageBox.Show("You already have this link included!", "Duplicate Warning", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -120,7 +110,7 @@ namespace Skydl
                         }
                         
                     }
-                }
+                
             }
         }
 
