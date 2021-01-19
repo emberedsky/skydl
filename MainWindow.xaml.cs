@@ -1216,12 +1216,7 @@ namespace Skydl
           
             
 
-            if (specifycode.IsChecked is true && formatcode.Text == "000")
-            {
-                MessageBox.Show("You did not specify the format code. If you do not want to specify it, please uncheck the 'specify format' box", "No Format Code Detected", MessageBoxButton.OK, MessageBoxImage.Information);
-                gate = "nopass";
-                
-            } else
+           
             if (specifycode.IsChecked is true)
             {
                 if (formatcode.Text == "000")
