@@ -1679,9 +1679,9 @@ namespace Skydl
                 gate = "ffmpegportion";
             }
 
-            if (link.Text.Length == 0 || link.Text.Contains(" ") is true)
+            if (link.Text.Length == 0)
             {
-                MessageBox.Show("You have not pasted any valid links", "Empty Link or Spaces in Link Detected", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("You have not pasted any valid links", "No Link Detected", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
             }
             else
