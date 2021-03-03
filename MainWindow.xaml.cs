@@ -1757,6 +1757,7 @@ namespace Skydl
         private void resetbutton_Click(object sender, RoutedEventArgs e)
         {
             link.Text = "";
+            trimconvercheckbox.IsChecked = false;
             filechosen.Text = "";
             Downloadlocation.Text = "";
             playlistcheckbox.IsChecked = false;
@@ -3116,6 +3117,7 @@ namespace Skydl
 
                
                 formatbox.SelectedItem = null;
+                trimconvercheckbox.IsChecked = false;
                 filechosen.Text = "";
             }
             else
