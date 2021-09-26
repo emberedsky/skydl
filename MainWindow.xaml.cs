@@ -910,7 +910,7 @@ namespace Skydl
             thumbnailprereq = "";
             subtitlesprereq = "";
             name = "youtube-dl.exe ";
-            formatprereq = "";
+            formatprereq = " -f best";
             alwaysthereprereq = "-ciw --no-mtime";
             tosequenceforportion = "";
             fetchedurl = "";
@@ -1079,15 +1079,7 @@ namespace Skydl
                 thumbnailprereq = " --embed-thumbnail";
             }
 
-            if (prioritizehighestquality.IsChecked is true)
-            {
-                formatprereq = "";
-            }
-
-            else
-            {
-                formatprereq = " -f best";
-            }
+           
 
 
             if (setpath.IsChecked is true)
@@ -1231,11 +1223,14 @@ namespace Skydl
 
             }
 
-            
-          
-            
 
-           
+
+            if (prioritizehighestquality.IsChecked is true)
+            {
+                formatprereq = "";
+            }
+
+
             if (specifycode.IsChecked is true)
             {
                 if (formatcode.Text == "000")
@@ -1623,7 +1618,7 @@ namespace Skydl
             thumbnailprereq = "";
             subtitlesprereq = "";
             name = "youtube-dl.exe ";
-            formatprereq = "";
+            formatprereq = " -f best";
             alwaysthereprereq = " -ciw --no-mtime";
 
             gate = "reset";
@@ -1638,15 +1633,9 @@ namespace Skydl
                 thumbnailprereq = " --embed-thumbnail";
             }
 
-            if (prioritizehighestquality.IsChecked is true)
-            {
-                formatprereq = "";
-            }
+           
 
-            else
-            {
-                formatprereq = " -f best";
-            }
+            
 
 
             if (setpath.IsChecked is true)
@@ -1691,7 +1680,10 @@ namespace Skydl
                 }
             }
 
-
+            if (prioritizehighestquality.IsChecked is true)
+            {
+                formatprereq = "";
+            }
 
             if (portioncheck.IsChecked is true)
             {
@@ -1784,6 +1776,7 @@ namespace Skydl
         private void resetbutton_Click(object sender, RoutedEventArgs e)
         {
             link.Text = "";
+            trimconvercheckbox.IsChecked = false;
             filechosen.Text = "";
             Downloadlocation.Text = "";
             titletext = "\\%(title)s.%(ext)s";
@@ -3145,6 +3138,7 @@ namespace Skydl
 
                
                 formatbox.SelectedItem = null;
+                trimconvercheckbox.IsChecked = false;
                 filechosen.Text = "";
             }
             else
