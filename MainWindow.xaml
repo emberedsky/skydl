@@ -47,7 +47,8 @@
 
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox x:Name="playlistcheckbox" Grid.Row="0" Grid.Column="0" Margin="0" Content="Playlist" HorizontalAlignment="Center" Height="15" VerticalAlignment="Bottom" Click= "playlistcheckbox_Clicked" Unchecked="playlistcheckbox_Clicked" />
+                        <CheckBox x:Name="playlistcheckbox" Grid.Row="0" Grid.Column="0" Margin="0" Content="Playlist" HorizontalAlignment="Left" Height="15" VerticalAlignment="Bottom" Click= "playlistcheckbox_Clicked" Unchecked="playlistcheckbox_Clicked" />
+                        <CheckBox x:Name="indexcheckbox" Grid.Row="0" Grid.Column="0" Margin="0" Content="Inlcude Index #" Visibility="Hidden" HorizontalAlignment="Right" Height="15" VerticalAlignment="Bottom" Click= "indexcheckbox_Click" Unchecked="indexcheckbox_Click" />
                         <CheckBox x:Name="execheckbox" Grid.Row="0" Grid.Column="1" Margin="20,0" Content="I changed the name of the youtube dl exe file" HorizontalAlignment="Center" Click="execheckbox_Clicked" Unchecked="execheckbox_Clicked" Height="15" VerticalAlignment="Top" />
                         <TextBox x:Name="plrange" Grid.Row="2" Grid.Column="0" Height="20" Width="100"  Padding="2" Margin="20 3 20 0" HorizontalAlignment="Center" FontSize="10" Visibility="Hidden" VerticalAlignment="Center" TextAlignment="Center" BorderBrush="Black" />
                         <CheckBox x:Name="plAll" Content="All" Margin="0 3 15 0" Grid.Row="2" Grid.Column="0" Padding="2" HorizontalAlignment="Right" FontSize="10" Visibility="Hidden" VerticalAlignment="Center" Click="plAll_Click" />

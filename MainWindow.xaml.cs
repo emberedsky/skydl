@@ -191,11 +191,14 @@ namespace Skydl
 
                 if (playlistcheckbox.IsChecked is false)
                 {
+                    indexcheckbox.Visibility = Visibility.Hidden;
                     plrange.Visibility = Visibility.Hidden;
                     plrangelabel.Visibility = Visibility.Hidden;
                     plAll.Visibility = Visibility.Hidden;
                     plrange.Text = "";
+                    titletext = "\\%(title)s.%(ext)s";
                     plAll.IsChecked = false;
+                    indexcheckbox.IsChecked = false;
 
                 }
 
@@ -210,7 +213,10 @@ namespace Skydl
                     else
                     {
                         plrange.Text = "";
+                        titletext = "\\%(title)s.%(ext)s";
                         plAll.IsChecked = false;
+                        indexcheckbox.IsChecked = false;
+                        indexcheckbox.Visibility = Visibility.Visible;
                         plrange.Visibility = Visibility.Visible;
                         plrangelabel.Visibility = Visibility.Visible;
                         plAll.Visibility = Visibility.Visible;
@@ -220,6 +226,18 @@ namespace Skydl
             }
 
 
+        }
+
+        private void indexcheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if (indexcheckbox.IsChecked is true)
+            {
+                titletext = "%(playlist_index)s \\%(title)s.%(ext)s";
+            }
+            else
+            {
+                titletext = "\\%(title)s.%(ext)s";
+            }
         }
 
         private void plAll_Click(object sender, RoutedEventArgs e)
@@ -876,6 +894,7 @@ namespace Skydl
         string tosequenceforportion;
         string formatforportion;
         string fetchedurl;
+        string titletext;
         string ffmpegpresetspeed = " -preset veryfast -speed 6 ";
 
 
@@ -1238,7 +1257,7 @@ namespace Skydl
 
             if (gate == "reset")
             {
-                downloadloc = " -o " + "\"" + Downloadlocation.Text + "\\%(title)s.%(ext)s" + "\" ";
+                downloadloc = " -o " + "\"" + Downloadlocation.Text + titletext + "\" ";
                 await RunAsync();
                 
                
@@ -1679,9 +1698,9 @@ namespace Skydl
                 gate = "ffmpegportion";
             }
 
-            if (link.Text.Length == 0 || link.Text.Contains(" ") is true)
+            if (link.Text.Length == 0)
             {
-                MessageBox.Show("You have not pasted any valid links", "Empty Link or Spaces in Link Detected", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("You have not pasted any valid links", "Empty Link Field", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
             }
             else
@@ -1734,7 +1753,7 @@ namespace Skydl
                 }
                 else
                 {
-                    downloadloc = " -o " + "\"" + Downloadlocation.Text + "\\%(title)s.%(ext)s" + "\" ";
+                    downloadloc = " -o " + "\"" + Downloadlocation.Text + titletext + "\" ";
                    
                     
                     Clipboard.SetText(name + alwaysthereprereq + subtitlesprereq + thumbnailprereq + formatprereq + playlistprereq + downloadloc + link.Text);
@@ -1767,6 +1786,8 @@ namespace Skydl
             link.Text = "";
             filechosen.Text = "";
             Downloadlocation.Text = "";
+            titletext = "\\%(title)s.%(ext)s";
+            indexcheckbox.IsChecked = false;
             playlistcheckbox.IsChecked = false;
             execheckbox.IsChecked = false;
             portioncheck.IsChecked = false;
@@ -2130,7 +2151,7 @@ namespace Skydl
             gate = "reset";
 
 
-            if (link.Text.Length == 0 || link.Text.Contains(" ") is true)
+            if (link.Text.Length == 0)
             {
                 MessageBox.Show("You have not pasted any valid links", "Empty Link Field", MessageBoxButton.OK, MessageBoxImage.Information);
                 gate = "nopass";
@@ -3171,5 +3192,7 @@ namespace Skydl
 
             Process.Start("https://github.com/emberedsky/skydl/releases");
         }
+
+
     }
 }
